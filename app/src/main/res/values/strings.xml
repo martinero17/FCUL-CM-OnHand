@@ -7,4 +7,11 @@
     <string name="username_icon">Username icon</string>
     <string name="password_icon">Password icon</string>
     <string name="register_text">Don’t have an account? Sign Up</string>
+    <string name="name_hint">Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="login_text">Already have an account? Sign In</string>
+    <string name="name_icon">Name icon</string>
+    <string name="type_hint">Type</string>
+    <string name="type_icon">Type icon</string>
+    <string name="register_button">Register</string>
 </resources>

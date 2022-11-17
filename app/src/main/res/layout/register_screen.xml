@@ -1,6 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+        <!-- LOGO -->
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:contentDescription="@string/logo"
+            app:srcCompat="@drawable/logo" />
+
+        <!-- NAME -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="40dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/gradient_border_rounded">
+
+            <EditText
+                android:id="@+id/name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/name_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/name_hint"
+                android:inputType="text"
+                android:textColorHint="@color/black" />
+
+            <ImageView
+                android:id="@+id/name_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/name_icon"
+                app:srcCompat="@drawable/ic_vector_name"
+                app:tint="@color/black"/>
+        </RelativeLayout>
+
+        <!-- USERNAME -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/gradient_border_rounded">
+
+            <EditText
+                android:id="@+id/username_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/username_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/username_hint"
+                android:inputType="text"
+                android:textColorHint="@color/black" />
+
+            <ImageView
+                android:id="@+id/username_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/username_icon"
+                app:srcCompat="@drawable/ic_vector_username"
+                app:tint="@color/black"/>
+        </RelativeLayout>
+
+        <!-- TYPE -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/gradient_border_rounded">
+
+            <EditText
+                android:id="@+id/type_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/type_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/type_hint"
+                android:inputType="text"
+                android:textColorHint="@color/black" />
+
+            <ImageView
+                android:id="@+id/type_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/type_icon"
+                app:srcCompat="@drawable/ic_vector_type"
+                app:tint="@color/black"/>
+        </RelativeLayout>
+
+        <!-- PASSWORD -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/gradient_border_rounded">
+
+            <EditText
+                android:id="@+id/password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/password_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:textColorHint="@color/black" />
+
+            <ImageView
+                android:id="@+id/password_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/password_icon"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_vector_password"
+                app:tint="@color/black" />
+        </RelativeLayout>
+
+        <!-- CONFIRM PASSWORD -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/gradient_border_rounded">
+
+            <EditText
+                android:id="@+id/re_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/re_password_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/confirm_password_hint"
+                android:inputType="textPassword"
+                android:textColorHint="@color/black" />
+
+            <ImageView
+                android:id="@+id/re_password_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/username_icon"
+                app:srcCompat="@drawable/ic_vector_password"
+                app:tint="@color/black"/>
+        </RelativeLayout>
+
+        <!-- REGISTER BUTTON -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/gradient_background_rounded"
+            android:elevation="5dp">
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/register_button" />
+        </RelativeLayout>
+
+        <!-- LOGIN -->
+        <TextView
+            android:id="@+id/register_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_text"
+            android:textAlignment="center"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
