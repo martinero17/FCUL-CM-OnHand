@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">FCUL-CM-OnHand</string>
+    <string name="app_name">OnHand</string>
+    <string name="logo">OnHand logo</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="username_icon">Username icon</string>
+    <string name="password_icon">Password icon</string>
+    <string name="register_text">Don’t have an account? Sign Up</string>
 </resources>
