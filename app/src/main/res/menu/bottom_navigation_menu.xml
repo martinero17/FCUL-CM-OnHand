@@ -1,17 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homeBtn"
+        android:id="@+id/home_button"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_format_paint_24"
-        android:title="Home"/>
+        android:icon="@drawable/ic_vector_home"
+        android:title="@string/home_button"/>
     <item
-        android:id="@+id/mapBtn"
+        android:id="@+id/medicine_button"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_map_24"
-        android:title="Notifications"/>
+        android:icon="@drawable/ic_vector_medicine"
+        android:title="@string/medicine_button"/>
     <item
-        android:id="@+id/settingsBtn"
+        android:id="@+id/settings_button"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Settings" />
+        android:icon="@drawable/ic_vector_settings"
+        android:title="@string/settings_button" />
 </menu>
