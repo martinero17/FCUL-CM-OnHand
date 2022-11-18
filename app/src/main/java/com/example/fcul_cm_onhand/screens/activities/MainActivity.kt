@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_care_receiver)
 
-        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener { item ->
-            when(item.itemId) {
+/*        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemSelectedListener { item ->
+            when (item.itemId) {
                 R.id.home_button -> {
                     // Respond to navigation home button click
                     startActivity(Intent(applicationContext, HomeCareReceiverActivity::class.java))
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }
+        }*/
     }
 
 }
