@@ -12,6 +12,20 @@
         android:theme="@style/Theme.FCULCMOnHand"
         tools:targetApi="31">
         <activity
+            android:name=".screens.activities.SettingsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".screens.activities.care_giver.HomeCareGiverActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".screens.activities.care_receiver.HomeCareReceiverActivity"
             android:exported="false">
             <meta-data

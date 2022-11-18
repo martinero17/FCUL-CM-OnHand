@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.settings_button -> {
-                    // Respond to navigation settings button click
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                    overridePendingTransition(0, 0)
                     true
                 }
                 else -> false

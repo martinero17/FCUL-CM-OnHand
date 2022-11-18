@@ -22,4 +22,6 @@
     <string name="notifications_button">Notifications</string>
     <string name="settings_button">Settings</string>
     <string name="medicine_button">Medicine</string>
+    <string name="notifications_switch">Notifications</string>
+    <string name="dark_mode_switch">Dark Mode</string>
 </resources>
