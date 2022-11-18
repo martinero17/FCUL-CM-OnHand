@@ -35,11 +35,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="80dp"
+            android:background="@drawable/gradient_border_rounded"
             android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:background="@drawable/gradient_border_rounded">
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp">
 
             <EditText
                 android:id="@+id/username_input"
@@ -59,7 +59,7 @@
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/username_icon"
                 app:srcCompat="@drawable/ic_vector_username"
-                app:tint="@color/black"/>
+                app:tint="@color/black" />
         </RelativeLayout>
 
         <!-- PASSWORD -->

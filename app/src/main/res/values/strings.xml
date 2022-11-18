@@ -24,4 +24,6 @@
     <string name="medicine_button">Medicine</string>
     <string name="notifications_switch">Notifications</string>
     <string name="dark_mode_switch">Dark Mode</string>
+    <string name="no_users_text">You don’t have users</string>
+    <string name="add_users_button_description">Add users button</string>
 </resources>
