@@ -26,4 +26,5 @@
     <string name="dark_mode_switch">Dark Mode</string>
     <string name="no_users_text">You don’t have users</string>
     <string name="add_users_button_description">Add users button</string>
+    <string name="start_monitoring_button">Start Monitoring</string>
 </resources>
