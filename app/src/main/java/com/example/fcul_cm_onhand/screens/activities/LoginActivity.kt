@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.model.UserType
+import com.example.fcul_cm_onhand.screens.activities.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +19,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.login_button).setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("UserType", UserType.CARE_RECEIVER)
+            startActivity(intent)
+
+            finish()
         }
     }
 }
