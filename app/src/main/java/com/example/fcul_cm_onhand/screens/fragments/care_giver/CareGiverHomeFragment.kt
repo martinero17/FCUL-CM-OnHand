@@ -16,7 +16,7 @@ class CareGiverHomeFragment : Fragment(R.layout.fragment_home_care_giver) {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<RelativeLayout>(R.id.user_button).setOnClickListener {
-            activity?.supportFragmentManager?.commit {
+            requireActivity().supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add<UserFragment>(R.id.fragmentHome)
             }
