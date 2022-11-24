@@ -9,8 +9,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.example.fcul_cm_onhand.screens.fragments.care_receiver.CareReceiverHomeFragment" />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -19,7 +18,7 @@
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
+        app:menu="@menu/bottom_navigation_menu_care_receiver"
         app:backgroundTint="@color/blue"
         app:itemTextColor="@drawable/bottom_nav_item_color"
         app:itemIconTint="@drawable/bottom_nav_item_color"/>
