@@ -42,7 +42,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/white"
-            android:text="@string/request_check_in_button"
+            android:text="@string/request_checkin_button"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             app:icon="@drawable/ic_vector_request_check_in"
