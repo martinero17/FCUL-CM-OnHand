@@ -25,7 +25,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:contentDescription="@string/logo"
             app:srcCompat="@drawable/logo" />
 
@@ -95,39 +95,6 @@
                 app:tint="@color/black"/>
         </RelativeLayout>
 
-        <!-- TYPE -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="20dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:background="@drawable/gradient_border_rounded">
-
-            <EditText
-                android:id="@+id/type_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/type_icon"
-                android:background="@android:color/transparent"
-                android:hint="@string/type_hint"
-                android:inputType="text"
-                android:textColorHint="@color/black" />
-
-            <ImageView
-                android:id="@+id/type_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/type_icon"
-                app:srcCompat="@drawable/ic_vector_type"
-                app:tint="@color/black"/>
-        </RelativeLayout>
-
         <!-- PASSWORD -->
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -192,6 +159,48 @@
                 android:contentDescription="@string/username_icon"
                 app:srcCompat="@drawable/ic_vector_password"
                 app:tint="@color/black"/>
+        </RelativeLayout>
+
+        <!-- TYPE -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/type_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/type_hint"
+                android:inputType="text"
+                android:textColorHint="@color/black"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="25dp">
+
+                <RadioButton
+                    android:id="@+id/radio_receiver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="@string/care_receiver_type"
+                    android:buttonTint="@color/blue"/>
+
+                <RadioButton android:id="@+id/radio_giver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/care_giver_type"
+                    android:onClick="onRadioButtonClicked"
+                    android:buttonTint="@color/blue"/>
+            </RadioGroup>
+
         </RelativeLayout>
 
         <!-- REGISTER BUTTON -->

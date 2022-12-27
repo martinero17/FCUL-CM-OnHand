@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.RadioButton
 import android.widget.TextView
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
@@ -26,6 +28,25 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
 
             finish()
+        }
+    }
+
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            // Is the button now checked?
+            val checked = view.isChecked
+
+            // Check which radio button was clicked
+            when (view.getId()) {
+                R.id.radio_receiver ->
+                    if(checked) {
+                        // TODO
+                    }
+                R.id.radio_giver ->
+                    if (checked) {
+                        // TODO
+                    }
+            }
         }
     }
 }

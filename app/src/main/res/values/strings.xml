@@ -33,4 +33,6 @@
     <string name="view_location_button">View Location</string>
     <string name="no_notifications_text">You don\'t have notifications</string>
     <string name="no_medicine_text">You don\'t have medicine</string>
+    <string name="care_receiver_type">Care Receiver</string>
+    <string name="care_giver_type">Care Giver</string>
 </resources>
