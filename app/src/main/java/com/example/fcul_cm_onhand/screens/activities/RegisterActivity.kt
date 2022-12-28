@@ -45,16 +45,14 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPassword = findViewById<EditText>(R.id.re_password_input).text
         val type = findViewById<RadioGroup>(R.id.radio_types)
 
-        if(inputIsEmpty(name, username, password, confirmPassword, type) ||
-            !passwordMatch(password, confirmPassword)){
-            return false
-        }
-        return true
+        return !inputIsEmpty(name, username, password, confirmPassword, type) &&
+                passwordMatch(password, confirmPassword)
+
     }
 
     private fun passwordMatch(password: Editable, confirmPassword: Editable): Boolean{
-        if(password != confirmPassword){
-            toastMessage("Password doesn't match!")
+        if(password.toString() != confirmPassword.toString()){
+            toastMessage("Password doesn't match!$password e $confirmPassword")
             return false
         }
         return true
@@ -74,7 +72,7 @@ class RegisterActivity : AppCompatActivity() {
         } else if(confirmPassword.isEmpty()){
             toastMessage("Please confirm password!")
             return true
-        } else if(type.isEmpty()){
+        } else if(type.checkedRadioButtonId == -1){
             toastMessage("Please select one type!")
             return true
         }
