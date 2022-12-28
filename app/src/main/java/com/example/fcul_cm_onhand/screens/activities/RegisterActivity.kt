@@ -14,21 +14,36 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isEmpty
+import com.example.fcul_cm_onhand.Firebase
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.screens.activities.main.MainActivity
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var userType: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        val fb = Firebase(applicationContext)
 
         findViewById<LinearLayout>(R.id.login_button).setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
         findViewById<Button>(R.id.register_button).setOnClickListener {
-            if(verifyCredentials()){
+            val name = findViewById<EditText>(R.id.name_input).text
+            val username = findViewById<EditText>(R.id.username_input).text
+            val password = findViewById<EditText>(R.id.password_input).text
+            val confirmPassword = findViewById<EditText>(R.id.re_password_input).text
+            val type = findViewById<RadioGroup>(R.id.radio_types)
+
+            if(verifyCredentials(name, username, password, confirmPassword, type)){
+                fb.addUser(name.toString(), username.toString(), password.toString(),
+                    userType)
+
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("UserType", UserType.CARE_GIVER) // TODO: REMOVE LATER
                 startActivity(intent)
@@ -38,13 +53,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun verifyCredentials(): Boolean {
-        val name = findViewById<EditText>(R.id.name_input).text
-        val username = findViewById<EditText>(R.id.username_input).text
-        val password = findViewById<EditText>(R.id.password_input).text
-        val confirmPassword = findViewById<EditText>(R.id.re_password_input).text
-        val type = findViewById<RadioGroup>(R.id.radio_types)
-
+    private fun verifyCredentials(name: Editable, username: Editable, password: Editable,
+                                  confirmPassword: Editable, type: RadioGroup): Boolean {
         return !inputIsEmpty(name, username, password, confirmPassword, type) &&
                 passwordMatch(password, confirmPassword)
 
@@ -93,11 +103,11 @@ class RegisterActivity : AppCompatActivity() {
             when (view.getId()) {
                 R.id.radio_receiver ->
                     if(checked) {
-                        // TODO
+                        userType = UserType.CARE_RECEIVER.toString()
                     }
                 R.id.radio_giver ->
                     if (checked) {
-                        // TODO
+                        userType = UserType.CARE_GIVER.toString()
                     }
             }
         }
