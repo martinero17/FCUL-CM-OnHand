@@ -18,6 +18,7 @@ import com.example.fcul_cm_onhand.Firebase
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.screens.activities.main.MainActivity
+import com.google.firebase.FirebaseApp
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -49,7 +50,6 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-
         }
     }
 
