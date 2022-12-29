@@ -23,7 +23,11 @@ class LoginActivity : AppCompatActivity() {
         // FirebaseFirestore.getInstance()
 
         findViewById<LinearLayout>(R.id.register_button).setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            //startActivity(Intent(this, RegisterActivity::class.java)) //TODO: Send to register activity
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("UserType", UserType.CARE_GIVER)
+            startActivity(intent)
+            finish()
         }
 
         findViewById<Button>(R.id.login_button).setOnClickListener {

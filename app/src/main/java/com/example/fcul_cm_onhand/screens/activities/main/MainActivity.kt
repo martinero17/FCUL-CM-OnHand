@@ -16,7 +16,6 @@ import com.example.fcul_cm_onhand.screens.fragments.care_giver.NotificationsFrag
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.CareReceiverHomeFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.MedicineFragment
 import com.google.android.material.navigation.NavigationBarView
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
