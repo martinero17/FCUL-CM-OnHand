@@ -9,9 +9,6 @@ import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.screens.activities.main.MainActivity
 import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,8 +16,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        FirebaseApp.initializeApp(applicationContext);
-        // FirebaseFirestore.getInstance()
+        FirebaseApp.initializeApp(applicationContext)
 
         findViewById<LinearLayout>(R.id.register_button).setOnClickListener {
             //startActivity(Intent(this, RegisterActivity::class.java)) //TODO: Send to register activity
