@@ -4,9 +4,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.Services.AlertDTO
+import com.example.fcul_cm_onhand.Services.IAlertService
+import com.example.fcul_cm_onhand.repositories.IAlertRepository
+import com.example.fcul_cm_onhand.screens.activities.main.MainActivityViewModel
+import com.google.type.TimeOfDay
+import java.sql.Timestamp
+import javax.inject.Inject
 
 class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) {
+
+    private val viewModel: MainActivityViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,6 +29,11 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
                 monitoringButton.text = getString(R.string.stop_monitoring_button)
                 monitoringButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_vector_pause, 0, 0, 0)
             }
+        }
+
+        val emergencyButton = view.findViewById<Button>(R.id.emergency_button)
+        emergencyButton.setOnClickListener {
+            viewModel.SendAlert()
         }
     }
 

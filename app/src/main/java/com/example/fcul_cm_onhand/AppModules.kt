@@ -1,7 +1,7 @@
 package com.example.fcul_cm_onhand
 
-import com.example.fcul_cm_onhand.Services.FirestoreService
-import com.example.fcul_cm_onhand.Services.IFirestoreService
+import com.example.fcul_cm_onhand.Services.AlertService
+import com.example.fcul_cm_onhand.Services.IAlertService
 import com.example.fcul_cm_onhand.repositories.AlertRepository
 import com.example.fcul_cm_onhand.repositories.IAlertRepository
 import com.google.firebase.firestore.ktx.firestore
@@ -24,7 +24,7 @@ class AppModules {
     interface AppModuleInterface {
         @Binds
         @Singleton
-        fun provideService(firestoreService: FirestoreService): IFirestoreService
+        fun provideService(firestoreService: AlertService): IAlertService
 
         @Binds
         @Singleton

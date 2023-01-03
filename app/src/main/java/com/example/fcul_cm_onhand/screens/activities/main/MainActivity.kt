@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.fcul_cm_onhand.Firebase
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
@@ -16,8 +17,9 @@ import com.example.fcul_cm_onhand.screens.fragments.care_giver.NotificationsFrag
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.CareReceiverHomeFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.MedicineFragment
 import com.google.android.material.navigation.NavigationBarView
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
