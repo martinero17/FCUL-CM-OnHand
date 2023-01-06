@@ -5,14 +5,12 @@ import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.fcul_cm_onhand.R
-import com.example.fcul_cm_onhand.Services.AlertDTO
-import com.example.fcul_cm_onhand.Services.IAlertService
-import com.example.fcul_cm_onhand.repositories.IAlertRepository
 import com.example.fcul_cm_onhand.screens.activities.main.MainActivityViewModel
-import com.google.type.TimeOfDay
-import java.sql.Timestamp
-import javax.inject.Inject
+import com.example.fcul_cm_onhand.workers.CheckInWorker
+import java.util.concurrent.TimeUnit
 
 class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) {
 
@@ -33,8 +31,19 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
 
         val emergencyButton = view.findViewById<Button>(R.id.emergency_button)
         emergencyButton.setOnClickListener {
-            viewModel.SendAlert()
+            viewModel.sendAlert()
         }
+
+        //Work requests
+        val saveRequest =
+            PeriodicWorkRequestBuilder<CheckInWorker>(
+                5, TimeUnit.MINUTES, // repeatInterval (the period cycle)
+                1, TimeUnit.MINUTES) // flexInterval
+                .build()
+
+        WorkManager
+            .getInstance(requireContext())
+            .enqueue(saveRequest)
     }
 
 }

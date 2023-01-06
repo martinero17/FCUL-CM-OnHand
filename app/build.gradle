@@ -83,6 +83,12 @@ dependencies {
     implementation 'com.google.dagger:hilt-android:2.42'
     kapt 'com.google.dagger:hilt-compiler:2.42'
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    //Work Manager
+    def work_version = "2.7.1"
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

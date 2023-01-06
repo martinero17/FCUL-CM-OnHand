@@ -18,7 +18,7 @@ class MainActivityViewModel @Inject constructor(): ViewModel() {
 
     var userType: UserType? = null
 
-    fun SendAlert() {
+    fun sendAlert() {
 
         viewModelScope.launch(Dispatchers.IO) {
             repo.sendAlert(AlertDTO("a", "b", "c", "d"))
