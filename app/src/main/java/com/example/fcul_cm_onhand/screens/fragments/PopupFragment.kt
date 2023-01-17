@@ -26,7 +26,9 @@ class PopupFragment : DialogFragment() {
             builder.setPositiveButton("Add user", DialogInterface.OnClickListener { dialog, id ->
                 // TODO: add the user
             })
-
+            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+                dialog?.cancel()
+            })
             builder.create()
 
         } ?: throw IllegalStateException("Activity cannot be null")
