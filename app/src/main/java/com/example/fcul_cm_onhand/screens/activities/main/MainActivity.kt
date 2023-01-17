@@ -63,9 +63,14 @@ class MainActivity : AppCompatActivity() {
     private fun setOnItemSelectedListener(navigationBarView: NavigationBarView) {
         if (viewModel.userType == UserType.CARE_GIVER) {
             careGiverOnItemSelectedListener(navigationBarView)
+            careGiverUpdateSubscriptions()
         } else if (viewModel.userType == UserType.CARE_RECEIVER) {
             careReceiverOnItemSelectedListener(navigationBarView)
         }
+    }
+
+    private fun careGiverUpdateSubscriptions() {
+        viewModel.startSubToAlerts()
     }
 
     private fun careGiverOnItemSelectedListener(navigationBarView: NavigationBarView) {

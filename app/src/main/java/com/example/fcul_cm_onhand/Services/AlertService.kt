@@ -1,5 +1,8 @@
 package com.example.fcul_cm_onhand.Services
 
+import android.content.ContentValues
+import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.tasks.await
@@ -24,8 +27,10 @@ data class AlertDTO(
 class AlertService @Inject constructor(private val firestore: FirebaseFirestore) : IAlertService {
     override suspend fun sendAlert(alert: AlertDTO) {
         println("")
-        firestore.collection("alerts")
-            .add(alert)
+        firestore
+            .collection("alerts")
+            .document(alert.giverId)
+            .set(alert)
             .await()
     }
 
@@ -33,7 +38,28 @@ class AlertService @Inject constructor(private val firestore: FirebaseFirestore)
         onSubscriptionError: (Exception) -> Unit,
         onStateChange: (alert: AlertDTO) -> Unit
     ): ListenerRegistration {
-        TODO("Not yet implemented")
+        return firestore
+            .collection("alerts")
+            .document("b")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w(ContentValues.TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                if (snapshot?.exists() == true) {
+                    val alert = snapshot.toAlert()
+                    onStateChange(alert)
+                }
+            }
     }
 
 }
+
+private fun DocumentSnapshot.toAlert() =
+    AlertDTO(
+        data?.get("id") as String,
+        data?.get("giverId") as String,
+        data?.get("receiverId") as String,
+        data?.get("type") as String
+    )
