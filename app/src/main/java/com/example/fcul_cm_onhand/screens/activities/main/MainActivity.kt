@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
 
-    val exactAlarms = (application as OnHandApplication).exactAlarms.apply {
+/*    val exactAlarms = (application as OnHandApplication).exactAlarms.apply {
 
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
