@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.res.Resources
 import com.example.fcul_cm_onhand.model.alarms.ExactAlarm
 import com.example.fcul_cm_onhand.model.alarms.ExactAlarms
+import com.example.fcul_cm_onhand.model.alarms.IExactAlarms
 import dagger.hilt.android.HiltAndroidApp
 
 const val SHARED_PREFS = "alarms"
@@ -15,7 +16,7 @@ class OnHandApplication : Application() {
         lateinit var resourses: Resources
     }
 
-    lateinit var exactAlarms: ExactAlarms
+    lateinit var exactAlarms: IExactAlarms
 
     override fun onCreate() {
         super.onCreate()
@@ -24,5 +25,6 @@ class OnHandApplication : Application() {
 
         val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         exactAlarms = ExactAlarms(this, sharedPreferences)
+        println("blele")
     }
 }

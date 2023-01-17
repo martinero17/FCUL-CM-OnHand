@@ -1,23 +1,21 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
+import com.example.fcul_cm_onhand.model.alarms.ExactAlarm
+import com.example.fcul_cm_onhand.model.alarms.IExactAlarms
+import com.example.fcul_cm_onhand.model.alarms.convertToAlarmTimeMillis
 import com.example.fcul_cm_onhand.screens.fragments.SettingsFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_giver.CareGiverHomeFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_giver.NotificationsFragment
@@ -25,19 +23,18 @@ import com.example.fcul_cm_onhand.screens.fragments.care_receiver.CareReceiverHo
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.MedicineFragment
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
 
-/*    val exactAlarms = (application as OnHandApplication).exactAlarms.apply {
-
-    }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val exactAlarms = (application as OnHandApplication).exactAlarms.apply {
+            rescheduleAlarm()
+        }
 
         val userTypeExtra = intent.extras?.getSerializable("UserType", UserType::class.java)
         viewModel.userType = userTypeExtra ?: viewModel.userType
@@ -60,12 +57,28 @@ class MainActivity : AppCompatActivity() {
                 add<CareReceiverHomeFragment>(R.id.fragmentHome)
             }
             setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
-            careReceiverRepeatingAlarmSetup()
+            careReceiverRepeatingAlarmSetup(exactAlarms)
         }
     }
 
-    private fun careReceiverRepeatingAlarmSetup() {
+    private fun careReceiverRepeatingAlarmSetup(exactAlarms: IExactAlarms) {
+        val triggerTime = convertToAlarmTimeMillis(23, 22)
+        exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime))
+    }
 
+    private fun careReceiverNotificationChannelsSetup() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = getString(R.string.checkin_channel_name)
+            val descriptionText = getString(R.string.checkin_channel_desc)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val mChannel = NotificationChannel(getString(R.string.checkin_channel_id), name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
     }
 
     private fun careGiverNotificationChannelsSetup() {
