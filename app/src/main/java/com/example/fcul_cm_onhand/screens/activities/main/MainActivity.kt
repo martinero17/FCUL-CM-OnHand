@@ -1,14 +1,17 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.fcul_cm_onhand.Firebase
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.screens.fragments.SettingsFragment
@@ -18,6 +21,7 @@ import com.example.fcul_cm_onhand.screens.fragments.care_receiver.CareReceiverHo
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.MedicineFragment
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,6 +42,8 @@ class MainActivity : AppCompatActivity() {
                 add<CareGiverHomeFragment>(R.id.fragmentHome)
             }
             setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
+            careGiverUpdateSubscriptions()
+            careGiverNotificationChannelsSetup()
         } else if (viewModel.userType == UserType.CARE_RECEIVER) {
             setContentView(R.layout.activity_main_care_receiver)
 
@@ -46,6 +52,21 @@ class MainActivity : AppCompatActivity() {
                 add<CareReceiverHomeFragment>(R.id.fragmentHome)
             }
             setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
+        }
+    }
+
+    private fun careGiverNotificationChannelsSetup() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = getString(R.string.alert_channel_name)
+            val descriptionText = getString(R.string.alert_channel_desc)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val mChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
         }
     }
 
@@ -63,7 +84,6 @@ class MainActivity : AppCompatActivity() {
     private fun setOnItemSelectedListener(navigationBarView: NavigationBarView) {
         if (viewModel.userType == UserType.CARE_GIVER) {
             careGiverOnItemSelectedListener(navigationBarView)
-            careGiverUpdateSubscriptions()
         } else if (viewModel.userType == UserType.CARE_RECEIVER) {
             careReceiverOnItemSelectedListener(navigationBarView)
         }

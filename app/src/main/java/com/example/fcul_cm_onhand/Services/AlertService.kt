@@ -50,6 +50,11 @@ class AlertService @Inject constructor(private val firestore: FirebaseFirestore)
                 if (snapshot?.exists() == true) {
                     val alert = snapshot.toAlert()
                     onStateChange(alert)
+
+                    firestore
+                        .collection("alerts")
+                        .document("b")
+                        .delete()
                 }
             }
     }

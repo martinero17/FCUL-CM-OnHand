@@ -1,8 +1,12 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
+import android.app.Application
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.Services.AlertDTO
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.repositories.IAlertRepository
@@ -14,7 +18,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(): ViewModel() {
+class MainActivityViewModel @Inject constructor(val application: Application): ViewModel() {
 
     @Inject
     lateinit var repo: IAlertRepository
@@ -37,7 +41,16 @@ class MainActivityViewModel @Inject constructor(): ViewModel() {
         subscription = repo.subscribeToAlerts(
             onSubscriptionError = { error(it) },
             onStateChange = {
-                Log.v("NEW_ALERT", "id: ${it.id}, giverId: ${it.giverId}, receiverId: ${it.receiverId}, type: ${it.type}")
+
+                val builder = NotificationCompat.Builder(application.applicationContext, application.getString(R.string.alert_channel_id))
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle("ALGUÉM ESTÁ A MORRER")
+                    .setContentText("O care receiver ${it.receiverId} está a morrer")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+                with(NotificationManagerCompat.from(application.applicationContext)) {
+                    notify(Random().nextInt(), builder.build())
+                }
             }
         )
     }
