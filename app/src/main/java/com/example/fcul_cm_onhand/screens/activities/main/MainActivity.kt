@@ -1,7 +1,10 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +15,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.screens.fragments.SettingsFragment
@@ -27,6 +31,10 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
+
+    val exactAlarms = (application as OnHandApplication).exactAlarms.apply {
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +60,12 @@ class MainActivity : AppCompatActivity() {
                 add<CareReceiverHomeFragment>(R.id.fragmentHome)
             }
             setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
+            careReceiverRepeatingAlarmSetup()
         }
+    }
+
+    private fun careReceiverRepeatingAlarmSetup() {
+
     }
 
     private fun careGiverNotificationChannelsSetup() {
