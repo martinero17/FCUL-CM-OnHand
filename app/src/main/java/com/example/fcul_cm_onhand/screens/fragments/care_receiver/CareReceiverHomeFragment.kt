@@ -5,12 +5,8 @@ import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.screens.activities.main.MainActivityViewModel
-import com.example.fcul_cm_onhand.workers.CheckInWorker
-import java.util.concurrent.TimeUnit
 
 class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) {
 
@@ -33,17 +29,6 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
         emergencyButton.setOnClickListener {
             viewModel.sendAlert()
         }
-
-        //Work requests
-        val saveRequest =
-            PeriodicWorkRequestBuilder<CheckInWorker>(
-                5, TimeUnit.MINUTES, // repeatInterval (the period cycle)
-                1, TimeUnit.MINUTES) // flexInterval
-                .build()
-
-        WorkManager
-            .getInstance(requireContext())
-            .enqueue(saveRequest)
     }
 
 }

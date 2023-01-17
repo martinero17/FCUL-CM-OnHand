@@ -3,4 +3,6 @@
     <style name="Theme.FCULCMOnHand" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/blue</item>
     </style>
+
+
 </resources>

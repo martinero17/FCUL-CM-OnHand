@@ -3,12 +3,15 @@ package com.example.fcul_cm_onhand.screens.fragments.care_giver
 import android.os.Bundle
 import android.view.View
 import android.view.View.INVISIBLE
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.screens.fragments.PopupFragment
 
 class CareGiverHomeFragment : Fragment(R.layout.fragment_home_care_giver) {
 
@@ -25,6 +28,10 @@ class CareGiverHomeFragment : Fragment(R.layout.fragment_home_care_giver) {
         view.findViewById<ImageView>(R.id.remove_user).setOnClickListener {
             view.findViewById<RelativeLayout>(R.id.user_button).visibility = INVISIBLE
         }
-    }
 
+        view.findViewById<ImageView>(R.id.add_users_button).setOnClickListener {
+            PopupFragment().show(requireActivity().supportFragmentManager, "add_user_popup")
+
+        }
+    }
 }
