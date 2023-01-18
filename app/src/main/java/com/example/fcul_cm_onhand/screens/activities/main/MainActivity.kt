@@ -2,6 +2,7 @@ package com.example.fcul_cm_onhand.screens.activities.main
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,11 +19,13 @@ import com.example.fcul_cm_onhand.model.alarms.ExactAlarm
 import com.example.fcul_cm_onhand.model.alarms.ExactAlarmType
 import com.example.fcul_cm_onhand.model.alarms.IExactAlarms
 import com.example.fcul_cm_onhand.model.alarms.convertToAlarmTimeMillis
-import com.example.fcul_cm_onhand.screens.fragments.SettingsFragment
+import com.example.fcul_cm_onhand.screens.activities.login.LoginActivity
 import com.example.fcul_cm_onhand.screens.fragments.care_giver.CareGiverHomeFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_giver.NotificationsFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.CareReceiverHomeFragment
 import com.example.fcul_cm_onhand.screens.fragments.care_receiver.MedicineFragment
+import com.example.fcul_cm_onhand.screens.fragments.settings.SettingsFragment
+import com.example.fcul_cm_onhand.services.FirebaseAuthService
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,29 +41,35 @@ class MainActivity : AppCompatActivity() {
             rescheduleAlarm()
         }
 
-        val userTypeExtra = intent.extras?.getSerializable("UserType", UserType::class.java)
-        viewModel.userType = userTypeExtra ?: viewModel.userType
+        if(FirebaseAuthService().isUserLogged()){
+            val userTypeExtra = intent.extras?.getSerializable("UserType", UserType::class.java)
+            viewModel.userType = userTypeExtra ?: viewModel.userType
 
-        if (viewModel.userType == UserType.CARE_GIVER) {
-            setContentView(R.layout.activity_main_care_giver)
+            if (viewModel.userType == UserType.CARE_GIVER) {
+                setContentView(R.layout.activity_main_care_giver)
 
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CareGiverHomeFragment>(R.id.fragmentHome)
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<CareGiverHomeFragment>(R.id.fragmentHome)
+                }
+                setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
+                careGiverUpdateSubscriptions()
+                careGiverNotificationChannelsSetup()
+            } else if (viewModel.userType == UserType.CARE_RECEIVER) {
+                setContentView(R.layout.activity_main_care_receiver)
+
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<CareReceiverHomeFragment>(R.id.fragmentHome)
+                }
+                setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
+                careReceiverRepeatingAlarmSetup(exactAlarms)
             }
-            setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
-            careGiverUpdateSubscriptions()
-            careGiverNotificationChannelsSetup()
-        } else if (viewModel.userType == UserType.CARE_RECEIVER) {
-            setContentView(R.layout.activity_main_care_receiver)
+        } else (
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        )
 
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CareReceiverHomeFragment>(R.id.fragmentHome)
-            }
-            setOnItemSelectedListener(findViewById(R.id.bottom_navigation))
-            careReceiverRepeatingAlarmSetup(exactAlarms)
-        }
+
     }
 
     private fun careReceiverRepeatingAlarmSetup(exactAlarms: IExactAlarms) {
