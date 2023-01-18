@@ -7,32 +7,37 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
+import android.widget.EditText
+import androidx.activity.viewModels
+import androidx.fragment.app.*
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.screens.activities.login.LoginViewModel
+import com.example.fcul_cm_onhand.screens.fragments.care_giver.CareGiverHomeFragment
+import com.example.fcul_cm_onhand.services.FireDatabaseService
+import com.example.fcul_cm_onhand.services.FirebaseAuthService
+import com.example.fcul_cm_onhand.services.PopupViewModel
 
-class PopupFragment : DialogFragment() {
+class PopupFragment : Fragment(R.layout.fragment_popup) {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
-            // Get the layout inflater
-            val inflater = requireActivity().layoutInflater
+    private val viewModel: PopupViewModel by viewModels()
 
-            // Inflate and set the layout for the dialog
-            // Pass null as the parent view because its going in the dialog layout
-            builder.setView(inflater.inflate(R.layout.fragment_popup, null))
-            builder.setPositiveButton("Add user", DialogInterface.OnClickListener { dialog, id ->
-                // TODO: add the user
-            })
-            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
-                dialog?.cancel()
-            })
-            builder.create()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        } ?: throw IllegalStateException("Activity cannot be null")
+        view.findViewById<Button>(R.id.add_user_btn).setOnClickListener {
+            val email = view.findViewById<EditText>(R.id.email).text.toString()
+            viewModel.getLoggedUser()
+            viewModel.user.observe(viewLifecycleOwner) {
+                viewModel.addUserToGiver(it.email, email)
+            }
+        }
+
+        view.findViewById<Button>(R.id.close_page).setOnClickListener {
+            requireActivity().supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<CareGiverHomeFragment>(R.id.fragmentHome)
+            }
+        }
+
     }
-
-
 }

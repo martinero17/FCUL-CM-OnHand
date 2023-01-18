@@ -1,8 +1,9 @@
 package com.example.fcul_cm_onhand.services
 
 import android.util.Log
-import android.widget.Toast
-import com.example.fcul_cm_onhand.model.User
+import com.example.fcul_cm_onhand.model.users.User
+import com.example.fcul_cm_onhand.model.users.UserGiver
+import com.example.fcul_cm_onhand.model.users.UserReceiver
 import com.google.firebase.firestore.FirebaseFirestore
 
 import kotlinx.coroutines.tasks.await
@@ -13,12 +14,42 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
 
     suspend fun signUp(name: String, email: String, type: String, token: String){
         val user = User(name, email, type, token)
+        if (user.isReceiver())
+            database.collection(USER_COLLECTION).document(email).set(UserReceiver(name, email, type, token, "", false))
+        else
+            database.collection(USER_COLLECTION).document(email).set(UserGiver(name, email, type, token,
+                mutableListOf()
+            ))
+    }
 
-        database.collection(USER_COLLECTION).add(user.toMap()).await()
+    suspend fun getUserByToken(token: String): User {
+        val snapshot = database.collection(USER_COLLECTION).whereEqualTo("token", token).get().await()
+        return snapshot.documents.first().toObject(User::class.java)!!
     }
 
     suspend fun getUserByEmail(email: String): User {
         val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
         return snapshot.documents.first().toObject(User::class.java)!!
+    }
+
+    suspend fun getUserGiverByEmail(email: String): UserGiver {
+        val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
+        return snapshot.documents.first().toObject(UserGiver::class.java)!!
+    }
+
+    suspend fun getUserReceiverByEmail(email: String): UserReceiver {
+        val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
+        return snapshot.documents.first().toObject(UserReceiver::class.java)!!
+    }
+
+    suspend fun addUserToGiver(giverEmail: String, receiverEmail: String) {
+        val giver = getUserGiverByEmail(giverEmail)
+        val receiver = getUserByEmail(receiverEmail) as UserReceiver
+
+        giver.receivers.add(receiver)
+        Log.v("POPUP_LOG2", giver.receivers.first().email)
+        database.collection(USER_COLLECTION).document(giverEmail).delete()
+
+        database.collection(USER_COLLECTION).document(giverEmail).set(giver)
     }
 }

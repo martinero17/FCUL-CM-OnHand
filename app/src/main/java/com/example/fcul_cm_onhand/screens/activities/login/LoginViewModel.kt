@@ -1,11 +1,10 @@
 package com.example.fcul_cm_onhand.screens.activities.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fcul_cm_onhand.model.User
+import com.example.fcul_cm_onhand.model.users.User
 import com.example.fcul_cm_onhand.services.FireDatabaseService
 import com.example.fcul_cm_onhand.services.FirebaseAuthService
 import kotlinx.coroutines.launch
