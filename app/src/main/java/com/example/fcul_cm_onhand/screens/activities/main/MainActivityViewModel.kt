@@ -9,6 +9,8 @@ import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.services.AlertDTO
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.repositories.IAlertRepository
+import com.example.fcul_cm_onhand.repositories.ICheckInRepository
+import com.example.fcul_cm_onhand.services.CheckInDTO
 import com.google.firebase.firestore.ListenerRegistration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,9 +22,12 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(val application: Application): ViewModel() {
 
     @Inject
-    lateinit var repo: IAlertRepository
+    lateinit var alertRepo: IAlertRepository
+    @Inject
+    lateinit var checkInRepo: ICheckInRepository
 
-    private lateinit var subscription: ListenerRegistration
+    private lateinit var alertSubscription: ListenerRegistration
+    private lateinit var checkInSubscription: ListenerRegistration
 
     var userType: UserType? = null
 
@@ -30,22 +35,46 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
 
     fun sendAlert(alertType: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.sendAlert(AlertDTO(UUID.randomUUID().toString(), "b", "c", alertType))
+            alertRepo.sendAlert(AlertDTO(UUID.randomUUID().toString(), "b", "c", alertType))
+        }
+    }
+
+    fun sendCheckIn() {
+        viewModelScope.launch(Dispatchers.IO) {
+            checkInRepo.sendCheckIn(CheckInDTO(UUID.randomUUID().toString(), "b", "c"))
         }
     }
 
     /* ******************** Giver Functionalities ******************** */
 
     fun startSubToAlerts() {
-        subscription = repo.subscribeToAlerts(
+        alertSubscription = alertRepo.subscribeToAlerts(
             onSubscriptionError = { error(it) },
             onStateChange = {
 
                 //Todo: Mudar estas strings
                 val builder = NotificationCompat.Builder(application.applicationContext, application.getString(R.string.alert_channel_id))
                     .setSmallIcon(R.drawable.logo)
-                    .setContentTitle("ALGUÉM ESTÁ A MORRER")
-                    .setContentText("O care receiver ${it.receiverId} está a morrer")
+                    .setContentTitle("Alert received!")
+                    .setContentText("The care receiver ${it.receiverId} has sent an ${it.type} alert")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+                with(NotificationManagerCompat.from(application.applicationContext)) {
+                    notify(Random().nextInt(), builder.build())
+                }
+            }
+        )
+    }
+
+    fun startSubToCheckIn() {
+        checkInSubscription = checkInRepo.subscribeToAlerts(
+            onSubscriptionError = { error(it) },
+            onStateChange = {
+
+                val builder = NotificationCompat.Builder(application.applicationContext, application.getString(R.string.alert_channel_id))
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle("CheckIn received!")
+                    .setContentText("The care receiver ${it.receiverId} has checked in")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
 
                 with(NotificationManagerCompat.from(application.applicationContext)) {

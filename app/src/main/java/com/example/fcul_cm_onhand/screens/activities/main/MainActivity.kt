@@ -70,14 +70,25 @@ class MainActivity : AppCompatActivity() {
     private fun careGiverNotificationChannelsSetup() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel
-            val name = getString(R.string.alert_channel_name)
-            val descriptionText = getString(R.string.alert_channel_desc)
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val mChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
+            var name = getString(R.string.alert_channel_name)
+            var descriptionText = getString(R.string.alert_channel_desc)
+            var importance = NotificationManager.IMPORTANCE_HIGH
+            var mChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
             mChannel.description = descriptionText
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            var notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+
+            // Create the NotificationChannel
+            name = "CheckIn"
+            descriptionText = "CheckIn notifications"
+            importance = NotificationManager.IMPORTANCE_HIGH
+            mChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(mChannel)
         }
     }
@@ -103,6 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun careGiverUpdateSubscriptions() {
         viewModel.startSubToAlerts()
+        viewModel.startSubToCheckIn()
     }
 
     private fun careGiverOnItemSelectedListener(navigationBarView: NavigationBarView) {

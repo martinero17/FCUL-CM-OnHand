@@ -2,7 +2,6 @@ package com.example.fcul_cm_onhand
 
 import android.app.Application
 import android.content.res.Resources
-import com.example.fcul_cm_onhand.model.alarms.ExactAlarm
 import com.example.fcul_cm_onhand.model.alarms.ExactAlarms
 import com.example.fcul_cm_onhand.model.alarms.IExactAlarms
 import dagger.hilt.android.HiltAndroidApp

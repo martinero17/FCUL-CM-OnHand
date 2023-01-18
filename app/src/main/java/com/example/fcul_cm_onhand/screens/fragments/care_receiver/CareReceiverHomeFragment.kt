@@ -29,6 +29,11 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
         emergencyButton.setOnClickListener {
             viewModel.sendAlert("MANUAL")
         }
+
+        val checkInButton = view.findViewById<Button>(R.id.check_in_button)
+        checkInButton.setOnClickListener {
+            viewModel.sendCheckIn()
+        }
     }
 
 }
