@@ -1,5 +1,6 @@
 package com.example.fcul_cm_onhand.model.alarms
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -50,6 +51,7 @@ class ExactAlarms(
         exactAlarmState.value = ExactAlarm.NOT_SET
     }
 
+    @SuppressLint("MissingPermission")
     private fun setExactAlarmSetExactAndAllowWhileIdle(
         triggerAtMillis: Long,
         alarmType: ExactAlarmType
@@ -62,6 +64,7 @@ class ExactAlarms(
         )
     }
 
+    @SuppressLint("MissingPermission")
     private fun setExactAlarmSetTimeoutAndAllowWhileIdle(
         triggerAtMillis: Long,
         alarmType: ExactAlarmType

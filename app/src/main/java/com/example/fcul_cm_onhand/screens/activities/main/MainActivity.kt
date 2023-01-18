@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun careReceiverRepeatingAlarmSetup(exactAlarms: IExactAlarms) {
-        val triggerTime = convertToAlarmTimeMillis(2, 12)
+        val triggerTime = convertToAlarmTimeMillis(12, 54)
         exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN)
     }
 

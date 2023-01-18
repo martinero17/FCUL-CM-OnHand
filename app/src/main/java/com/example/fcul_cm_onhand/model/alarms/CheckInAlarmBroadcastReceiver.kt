@@ -4,12 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
-import com.example.fcul_cm_onhand.screens.activities.main.MainActivityViewModel
+import com.example.fcul_cm_onhand.repositories.IAlertRepository
+import com.example.fcul_cm_onhand.services.AlertDTO
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 class CheckInAlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -28,17 +32,22 @@ class CheckInAlarmBroadcastReceiver : BroadcastReceiver() {
         application.exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN_TIMEOUT)
 
         //Reschedule for the next day
-        triggerTime = convertToAlarmTimeMillis(2, 13)
+        application.exactAlarms.clearExactAlarm(ExactAlarmType.CHECK_IN)
+        triggerTime = convertToAlarmTimeMillis(11, 5)
         application.exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN)
     }
 }
 
-class CheckInTimeoutAlarmBroadcastReceiver : BroadcastReceiver() {
+@AndroidEntryPoint
+class CheckInTimeoutAlarmBroadcastReceiver @Inject constructor(): BroadcastReceiver() {
+
+    @Inject
+    lateinit var repo: IAlertRepository
 
     override fun onReceive(context: Context, intent: Intent?) {
-        val viewModel =
-            ViewModelProvider(context as AppCompatActivity)[MainActivityViewModel::class.java]
         val application = (context.applicationContext as OnHandApplication)
+
+        val scope = CoroutineScope(Dispatchers.IO)
 
         showNotification(
             context,
@@ -48,6 +57,8 @@ class CheckInTimeoutAlarmBroadcastReceiver : BroadcastReceiver() {
             "Check-in timedout, alarm sent to care giver!"
         )
 
-        viewModel.sendAlert("AUTOMATIC")
+        scope.launch {
+            repo.sendAlert(AlertDTO(UUID.randomUUID().toString(), "b", "c", "AUTOMATIC"))
+        }
     }
 }
