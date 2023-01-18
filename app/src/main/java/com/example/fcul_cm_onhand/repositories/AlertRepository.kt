@@ -9,7 +9,7 @@ interface IAlertRepository {
     suspend fun sendAlert(alert: AlertDTO)
     fun subscribeToAlerts(
         onSubscriptionError: (Exception) -> Unit,
-        onStateChange: (path: AlertDTO) -> Unit
+        onStateChange: (alert: AlertDTO) -> Unit
     ): ListenerRegistration
 }
 

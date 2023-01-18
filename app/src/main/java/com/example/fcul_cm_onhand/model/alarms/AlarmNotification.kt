@@ -8,7 +8,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
@@ -57,7 +56,7 @@ class AlarmNotificationClickedBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val application = (context.applicationContext as OnHandApplication)
-        
+
         //TODO: Somehow send checkin info
         application.exactAlarms.clearExactAlarm(ExactAlarmType.CHECK_IN_TIMEOUT)
     }

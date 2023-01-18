@@ -8,29 +8,29 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-interface IAlertService {
-    suspend fun sendAlert(alert: AlertDTO)
-    fun subscribeToAlerts(
+interface ICheckInService {
+    suspend fun sendCheckIn(checkIn: CheckInDTO)
+    fun subscribeToCheckIn(
         onSubscriptionError: (Exception) -> Unit,
-        onStateChange: (alert: AlertDTO) -> Unit
+        onStateChange: (checkIn: CheckInDTO) -> Unit
     ): ListenerRegistration
 }
 
-class AlertService @Inject constructor(private val firestore: FirebaseFirestore): IAlertService {
-    override suspend fun sendAlert(alert: AlertDTO) {
+class CheckInService @Inject constructor(private val firestore: FirebaseFirestore): ICheckInService {
+    override suspend fun sendCheckIn(checkIn: CheckInDTO) {
         firestore
-            .collection("alerts")
-            .document(alert.giverId)
-            .set(alert)
+            .collection("checkins")
+            .document(checkIn.giverId)
+            .set(checkIn)
             .await()
     }
 
-    override fun subscribeToAlerts(
+    override fun subscribeToCheckIn(
         onSubscriptionError: (Exception) -> Unit,
-        onStateChange: (alert: AlertDTO) -> Unit
+        onStateChange: (checkIn: CheckInDTO) -> Unit
     ): ListenerRegistration {
         return firestore
-            .collection("alerts")
+            .collection("checkins")
             .document("b")
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
@@ -39,11 +39,11 @@ class AlertService @Inject constructor(private val firestore: FirebaseFirestore)
                 }
 
                 if (snapshot?.exists() == true) {
-                    val alert = snapshot.toAlert()
-                    onStateChange(alert)
+                    val checkIn = snapshot.toCheckIn()
+                    onStateChange(checkIn)
 
                     firestore
-                        .collection("alerts")
+                        .collection("checkins")
                         .document("b")
                         .delete()
                 }
@@ -52,17 +52,15 @@ class AlertService @Inject constructor(private val firestore: FirebaseFirestore)
 
 }
 
-data class AlertDTO(
+data class CheckInDTO(
     val id: String,
     val giverId: String,
-    val receiverId: String,
-    val type: String
+    var receiverId: String
 )
 
-private fun DocumentSnapshot.toAlert() =
-    AlertDTO(
+private fun DocumentSnapshot.toCheckIn() =
+    CheckInDTO(
         data?.get("id") as String,
         data?.get("giverId") as String,
         data?.get("receiverId") as String,
-        data?.get("type") as String,
     )

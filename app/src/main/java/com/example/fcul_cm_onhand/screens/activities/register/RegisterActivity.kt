@@ -20,7 +20,7 @@ import com.example.fcul_cm_onhand.screens.activities.main.MainActivity
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var userType: String
+    private lateinit var userType: UserType
     private val viewModel: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +37,13 @@ class RegisterActivity : AppCompatActivity() {
             val email = findViewById<EditText>(R.id.email_input).text.toString()
             val password = findViewById<EditText>(R.id.password_input).text.toString()
 
-            viewModel.register(name, email, userType, password)
+            viewModel.register(name, email, userType.toString(), password)
         }
 
         viewModel.registerSuccess.observe(this) {
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+                .putExtra("UserType", userType)
+            startActivity(intent)
         }
 
         viewModel.registerError.observe(this) {
@@ -65,11 +67,11 @@ class RegisterActivity : AppCompatActivity() {
             when (view.getId()) {
                 R.id.radio_receiver ->
                     if(checked) {
-                        userType = UserType.CARE_RECEIVER.toString()
+                        userType = UserType.CARE_RECEIVER
                     }
                 R.id.radio_giver ->
                     if (checked) {
-                        userType = UserType.CARE_GIVER.toString()
+                        userType = UserType.CARE_GIVER
                     }
             }
         }
