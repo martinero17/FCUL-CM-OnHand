@@ -1,7 +1,7 @@
 package com.example.fcul_cm_onhand
 
-import com.example.fcul_cm_onhand.Services.AlertService
-import com.example.fcul_cm_onhand.Services.IAlertService
+import com.example.fcul_cm_onhand.services.AlertService
+import com.example.fcul_cm_onhand.services.IAlertService
 import com.example.fcul_cm_onhand.repositories.AlertRepository
 import com.example.fcul_cm_onhand.repositories.IAlertRepository
 import com.google.firebase.firestore.ktx.firestore

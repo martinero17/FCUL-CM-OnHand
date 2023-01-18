@@ -1,7 +1,7 @@
 package com.example.fcul_cm_onhand.repositories
 
-import com.example.fcul_cm_onhand.Services.AlertDTO
-import com.example.fcul_cm_onhand.Services.IAlertService
+import com.example.fcul_cm_onhand.services.AlertDTO
+import com.example.fcul_cm_onhand.services.IAlertService
 import com.google.firebase.firestore.ListenerRegistration
 import javax.inject.Inject
 

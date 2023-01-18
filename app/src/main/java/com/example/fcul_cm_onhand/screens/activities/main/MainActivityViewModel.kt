@@ -1,13 +1,12 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
 import android.app.Application
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fcul_cm_onhand.R
-import com.example.fcul_cm_onhand.Services.AlertDTO
+import com.example.fcul_cm_onhand.services.AlertDTO
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.repositories.IAlertRepository
 import com.google.firebase.firestore.ListenerRegistration
@@ -29,9 +28,9 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
 
     /* ******************** Receiver Functionalities ******************** */
 
-    fun sendAlert() {
+    fun sendAlert(alertType: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.sendAlert(AlertDTO(UUID.randomUUID().toString(), "b", "c", "d"))
+            repo.sendAlert(AlertDTO(UUID.randomUUID().toString(), "b", "c", alertType))
         }
     }
 

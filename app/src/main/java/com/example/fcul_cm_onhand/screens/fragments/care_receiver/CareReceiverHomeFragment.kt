@@ -27,7 +27,7 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
 
         val emergencyButton = view.findViewById<Button>(R.id.emergency_button)
         emergencyButton.setOnClickListener {
-            viewModel.sendAlert()
+            viewModel.sendAlert("MANUAL")
         }
     }
 

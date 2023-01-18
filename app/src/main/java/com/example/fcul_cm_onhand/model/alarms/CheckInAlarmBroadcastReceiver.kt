@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.screens.activities.main.MainActivityViewModel
 import java.util.*
 
 class CheckInAlarmBroadcastReceiver : BroadcastReceiver() {
@@ -32,7 +34,20 @@ class CheckInAlarmBroadcastReceiver : BroadcastReceiver() {
 }
 
 class CheckInTimeoutAlarmBroadcastReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.v("BCAST_RECEIVER", "Time expired")
+        val viewModel =
+            ViewModelProvider(context as AppCompatActivity)[MainActivityViewModel::class.java]
+        val application = (context.applicationContext as OnHandApplication)
+
+        showNotification(
+            context,
+            application.getString(R.string.checkin_channel_id),
+            application.getString(R.string.checkin_channel_name),
+            Random().nextInt(),
+            "Check-in timedout, alarm sent to care giver!"
+        )
+
+        viewModel.sendAlert("AUTOMATIC")
     }
 }
