@@ -40,4 +40,8 @@
     <string name="alert_channel_name">Alert</string>
     <string name="alert_channel_desc">Emergency alert notifications.</string>
 
+    <string name="checkin_channel_id">CHECKIN_CHANNEL</string>
+    <string name="checkin_channel_name">CheckIn</string>
+    <string name="checkin_channel_desc">Check-in notifications.</string>
+
 </resources>

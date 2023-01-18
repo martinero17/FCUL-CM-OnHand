@@ -42,6 +42,7 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
             onSubscriptionError = { error(it) },
             onStateChange = {
 
+                //Todo: Mudar estas strings
                 val builder = NotificationCompat.Builder(application.applicationContext, application.getString(R.string.alert_channel_id))
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle("ALGUÉM ESTÁ A MORRER")

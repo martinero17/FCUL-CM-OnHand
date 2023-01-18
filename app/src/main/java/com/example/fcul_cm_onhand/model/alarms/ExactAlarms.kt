@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 
 const val EXACT_ALARM_INTENT_REQUEST_CODE = 1001
@@ -13,12 +14,16 @@ const val EXACT_ALARM_INTENT_REQUEST_CODE = 1001
 class ExactAlarms(
     private val context: Context,
     private val sharedPreferences: SharedPreferences
-) {
+): IExactAlarms {
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     private var exactAlarmState = mutableStateOf(ExactAlarm.NOT_SET)
 
-    fun rescheduleAlarm() {
+    override fun getExactAlarmState(): State<ExactAlarm> {
+        TODO("Not yet implemented")
+    }
+
+    override fun rescheduleAlarm() {
         val alarm: ExactAlarm = sharedPreferences.getExactAlarm()
         if (alarm.isSet() && alarm.isNotInPast() && canScheduleExactAlarms()) {
             scheduleExactAlarm(alarm)
@@ -27,13 +32,13 @@ class ExactAlarms(
         }
     }
 
-    fun scheduleExactAlarm(exactAlarm: ExactAlarm) {
+    override fun scheduleExactAlarm(exactAlarm: ExactAlarm) {
         setExactAlarmSetExactAndAllowWhileIdle(exactAlarm.triggerAtMillis)
         sharedPreferences.putExactAlarm(exactAlarm)
         exactAlarmState.value = exactAlarm
     }
 
-    fun clearExactAlarm() {
+    override fun clearExactAlarm() {
         val pendingIntent = createExactAlarmIntent()
         alarmManager.cancel(pendingIntent)
 
@@ -56,7 +61,7 @@ class ExactAlarms(
         )
     }
 
-    fun canScheduleExactAlarms(): Boolean {
+    override fun canScheduleExactAlarms(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             alarmManager.canScheduleExactAlarms()
         } else {
