@@ -53,5 +53,6 @@
         </activity>
 
         <receiver android:name="com.example.fcul_cm_onhand.model.alarms.CheckInAlarmBroadcastReceiver" />
+        <receiver android:name="com.example.fcul_cm_onhand.model.alarms.CheckInTimeoutAlarmBroadcastReceiver" />
     </application>
 </manifest>

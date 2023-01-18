@@ -1,6 +1,5 @@
 package com.example.fcul_cm_onhand.model.alarms
 
-import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -23,15 +22,16 @@ class CheckInAlarmBroadcastReceiver : BroadcastReceiver() {
         )
 
         //Set timeout alarm
-        application.exactAlarms.scheduleExactAlarm(ExactAlarm(SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR), ExactAlarmType.CHECK_IN_TIMEOUT)
+        var triggerTime = SystemClock.elapsedRealtime() + 10000
+        application.exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN_TIMEOUT)
 
         //Reschedule for the next day
-        val triggerTime = convertToAlarmTimeMillis(12, 0)
+        triggerTime = convertToAlarmTimeMillis(2, 13)
         application.exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN)
     }
 }
 
-class CheckInTimoutAlarmBroadcastReceiver : BroadcastReceiver() {
+class CheckInTimeoutAlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         Log.v("BCAST_RECEIVER", "Time expired")
     }

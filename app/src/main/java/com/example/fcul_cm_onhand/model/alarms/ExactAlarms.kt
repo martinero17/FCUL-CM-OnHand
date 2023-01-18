@@ -34,7 +34,10 @@ class ExactAlarms(
     }
 
     override fun scheduleExactAlarm(exactAlarm: ExactAlarm, alarmType: ExactAlarmType) {
-        setExactAlarmSetExactAndAllowWhileIdle(exactAlarm.triggerAtMillis, alarmType)
+        if (alarmType == ExactAlarmType.CHECK_IN)
+            setExactAlarmSetExactAndAllowWhileIdle(exactAlarm.triggerAtMillis, alarmType)
+        else if (alarmType == ExactAlarmType.CHECK_IN_TIMEOUT)
+            setExactAlarmSetTimeoutAndAllowWhileIdle(exactAlarm.triggerAtMillis, alarmType)
         sharedPreferences.putExactAlarm(exactAlarm)
         exactAlarmState.value = exactAlarm
     }
@@ -105,7 +108,7 @@ fun requestCodeFromAlarmType(alarmType: ExactAlarmType): Int {
 fun BroadcastReceiverFromAlarmType(alarmType: ExactAlarmType): Class<*> {
     return when (alarmType) {
         ExactAlarmType.CHECK_IN -> CheckInAlarmBroadcastReceiver::class.java
-        ExactAlarmType.CHECK_IN_TIMEOUT -> CheckInTimoutAlarmBroadcastReceiver::class.java
+        ExactAlarmType.CHECK_IN_TIMEOUT -> CheckInTimeoutAlarmBroadcastReceiver::class.java
     }
 }
 
