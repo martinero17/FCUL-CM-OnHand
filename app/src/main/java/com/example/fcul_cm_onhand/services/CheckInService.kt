@@ -39,6 +39,7 @@ class CheckInService @Inject constructor(private val firestore: FirebaseFirestor
                 }
 
                 if (snapshot?.exists() == true) {
+
                     val checkIn = snapshot.toCheckIn()
                     onStateChange(checkIn)
 

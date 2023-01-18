@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun careReceiverRepeatingAlarmSetup(exactAlarms: IExactAlarms) {
-        val triggerTime = convertToAlarmTimeMillis(12, 54)
+        val triggerTime = convertToAlarmTimeMillis(17, 28)
         exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN)
     }
 
@@ -74,23 +74,23 @@ class MainActivity : AppCompatActivity() {
             var name = getString(R.string.alert_channel_name)
             var descriptionText = getString(R.string.alert_channel_desc)
             var importance = NotificationManager.IMPORTANCE_HIGH
-            var mChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
-            mChannel.description = descriptionText
+            val alertChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
+            alertChannel.description = descriptionText
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             var notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
+            notificationManager.createNotificationChannel(alertChannel)
 
             // Create the NotificationChannel
             name = "CheckIn"
             descriptionText = "CheckIn notifications"
             importance = NotificationManager.IMPORTANCE_HIGH
-            mChannel = NotificationChannel(getString(R.string.alert_channel_id), name, importance)
-            mChannel.description = descriptionText
+            val checkInChannel = NotificationChannel("CHECK_IN_CHANNEL", name, importance)
+            checkInChannel.description = descriptionText
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
+            notificationManager.createNotificationChannel(checkInChannel)
         }
     }
 

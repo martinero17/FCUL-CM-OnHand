@@ -1,6 +1,7 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
 import android.app.Application
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
@@ -71,11 +72,11 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
             onSubscriptionError = { error(it) },
             onStateChange = {
 
-                val builder = NotificationCompat.Builder(application.applicationContext, application.getString(R.string.alert_channel_id))
+                val builder = NotificationCompat.Builder(application.applicationContext, "CHECK_IN_CHANNEL")
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle("CheckIn received!")
                     .setContentText("The care receiver ${it.receiverId} has checked in")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                 with(NotificationManagerCompat.from(application.applicationContext)) {
                     notify(Random().nextInt(), builder.build())

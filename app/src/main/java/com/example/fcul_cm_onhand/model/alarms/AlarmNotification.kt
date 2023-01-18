@@ -11,6 +11,16 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.repositories.IAlertRepository
+import com.example.fcul_cm_onhand.services.AlertDTO
+import com.example.fcul_cm_onhand.services.CheckInDTO
+import com.example.fcul_cm_onhand.services.ICheckInService
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 
 @SuppressLint("LaunchActivityFromNotification")
 fun showNotification(
@@ -52,12 +62,21 @@ fun showNotification(
     notificationManager.notify(notificationId, notification)
 }
 
+@AndroidEntryPoint
 class AlarmNotificationClickedBroadcastReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var repo: ICheckInService
 
     override fun onReceive(context: Context, intent: Intent) {
         val application = (context.applicationContext as OnHandApplication)
 
-        //TODO: Somehow send checkin info
+        val scope = CoroutineScope(Dispatchers.IO)
+
+        scope.launch {
+            repo.sendCheckIn(CheckInDTO(UUID.randomUUID().toString(), "b", "c"))
+        }
+
         application.exactAlarms.clearExactAlarm(ExactAlarmType.CHECK_IN_TIMEOUT)
     }
 }
