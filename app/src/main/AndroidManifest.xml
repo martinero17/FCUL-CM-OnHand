@@ -23,7 +23,7 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".screens.activities.RegisterActivity"
+            android:name=".screens.activities.register.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".screens.activities.LoginActivity"
+            android:name=".screens.activities.login.LoginActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
