@@ -9,7 +9,8 @@ import android.os.Build
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 
-const val EXACT_ALARM_INTENT_REQUEST_CODE = 1001
+const val CHECK_IN_REQUEST_CODE = 1001
+const val CHECK_IN_TIMEOUT_REQUEST_CODE = 1002
 
 class ExactAlarms(
     private val context: Context,
@@ -26,36 +27,55 @@ class ExactAlarms(
     override fun rescheduleAlarm() {
         val alarm: ExactAlarm = sharedPreferences.getExactAlarm()
         if (alarm.isSet() && alarm.isNotInPast() && canScheduleExactAlarms()) {
-            scheduleExactAlarm(alarm)
+            scheduleExactAlarm(alarm, ExactAlarmType.CHECK_IN)
         } else {
-            clearExactAlarm()
+            clearExactAlarm(ExactAlarmType.CHECK_IN)
         }
     }
 
-    override fun scheduleExactAlarm(exactAlarm: ExactAlarm) {
-        setExactAlarmSetExactAndAllowWhileIdle(exactAlarm.triggerAtMillis)
+    override fun scheduleExactAlarm(exactAlarm: ExactAlarm, alarmType: ExactAlarmType) {
+        setExactAlarmSetExactAndAllowWhileIdle(exactAlarm.triggerAtMillis, alarmType)
         sharedPreferences.putExactAlarm(exactAlarm)
         exactAlarmState.value = exactAlarm
     }
 
-    override fun clearExactAlarm() {
-        val pendingIntent = createExactAlarmIntent()
+    override fun clearExactAlarm(alarmType: ExactAlarmType) {
+        val pendingIntent = createExactAlarmIntent(alarmType)
         alarmManager.cancel(pendingIntent)
 
         sharedPreferences.clearExactAlarm()
         exactAlarmState.value = ExactAlarm.NOT_SET
     }
 
-    private fun setExactAlarmSetExactAndAllowWhileIdle(triggerAtMillis: Long) {
-        val pendingIntent = createExactAlarmIntent()
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+    private fun setExactAlarmSetExactAndAllowWhileIdle(
+        triggerAtMillis: Long,
+        alarmType: ExactAlarmType
+    ) {
+        val pendingIntent = createExactAlarmIntent(alarmType)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            triggerAtMillis,
+            pendingIntent
+        )
     }
 
-    private fun createExactAlarmIntent(): PendingIntent {
-        val intent = Intent(context, ExactAlarmBroadcastReceiver::class.java)
+    private fun setExactAlarmSetTimeoutAndAllowWhileIdle(
+        triggerAtMillis: Long,
+        alarmType: ExactAlarmType
+    ) {
+        val pendingIntent = createExactAlarmIntent(alarmType)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            triggerAtMillis,
+            pendingIntent
+        )
+    }
+
+    private fun createExactAlarmIntent(alarmType: ExactAlarmType): PendingIntent {
+        val intent = Intent(context, BroadcastReceiverFromAlarmType(alarmType))
         return PendingIntent.getBroadcast(
             context,
-            EXACT_ALARM_INTENT_REQUEST_CODE,
+            requestCodeFromAlarmType(alarmType),
             intent,
             PendingIntent.FLAG_IMMUTABLE
         )
@@ -67,6 +87,25 @@ class ExactAlarms(
         } else {
             true
         }
+    }
+}
+
+enum class ExactAlarmType {
+    CHECK_IN,
+    CHECK_IN_TIMEOUT
+}
+
+fun requestCodeFromAlarmType(alarmType: ExactAlarmType): Int {
+    return when (alarmType) {
+        ExactAlarmType.CHECK_IN -> CHECK_IN_REQUEST_CODE
+        ExactAlarmType.CHECK_IN_TIMEOUT -> CHECK_IN_TIMEOUT_REQUEST_CODE
+    }
+}
+
+fun BroadcastReceiverFromAlarmType(alarmType: ExactAlarmType): Class<*> {
+    return when (alarmType) {
+        ExactAlarmType.CHECK_IN -> CheckInAlarmBroadcastReceiver::class.java
+        ExactAlarmType.CHECK_IN_TIMEOUT -> CheckInTimoutAlarmBroadcastReceiver::class.java
     }
 }
 

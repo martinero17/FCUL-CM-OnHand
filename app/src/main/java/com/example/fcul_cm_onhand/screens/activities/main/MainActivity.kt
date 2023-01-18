@@ -14,6 +14,7 @@ import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.model.alarms.ExactAlarm
+import com.example.fcul_cm_onhand.model.alarms.ExactAlarmType
 import com.example.fcul_cm_onhand.model.alarms.IExactAlarms
 import com.example.fcul_cm_onhand.model.alarms.convertToAlarmTimeMillis
 import com.example.fcul_cm_onhand.screens.fragments.SettingsFragment
@@ -62,23 +63,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun careReceiverRepeatingAlarmSetup(exactAlarms: IExactAlarms) {
-        val triggerTime = convertToAlarmTimeMillis(23, 22)
-        exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime))
-    }
-
-    private fun careReceiverNotificationChannelsSetup() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel
-            val name = getString(R.string.checkin_channel_name)
-            val descriptionText = getString(R.string.checkin_channel_desc)
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val mChannel = NotificationChannel(getString(R.string.checkin_channel_id), name, importance)
-            mChannel.description = descriptionText
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
-        }
+        val triggerTime = convertToAlarmTimeMillis(0, 59)
+        exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN)
     }
 
     private fun careGiverNotificationChannelsSetup() {

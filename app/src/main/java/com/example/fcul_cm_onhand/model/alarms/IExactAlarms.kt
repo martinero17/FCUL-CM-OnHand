@@ -8,9 +8,9 @@ interface IExactAlarms {
 
     fun rescheduleAlarm()
 
-    fun scheduleExactAlarm(exactAlarm: ExactAlarm)
+    fun scheduleExactAlarm(exactAlarm: ExactAlarm, alarmType: ExactAlarmType)
 
-    fun clearExactAlarm()
+    fun clearExactAlarm(alarmType: ExactAlarmType)
 
     fun canScheduleExactAlarms(): Boolean
 }
