@@ -27,6 +27,11 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
         return snapshot.documents.first().toObject(User::class.java)!!
     }
 
+    suspend fun getUserGiverByToken(token: String): UserGiver {
+        val snapshot = database.collection(USER_COLLECTION).whereEqualTo("token", token).get().await()
+        return snapshot.documents.first().toObject(UserGiver::class.java)!!
+    }
+
     suspend fun getUserByEmail(email: String): User {
         val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
         return snapshot.documents.first().toObject(User::class.java)!!
@@ -49,5 +54,11 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
         giver.receivers.add(receiver)
 
         database.collection(USER_COLLECTION).document(giverEmail).set(giver)
+    }
+
+    suspend fun getGiverUsers(email: String): MutableList<UserReceiver> {
+        val giver = getUserGiverByEmail(email)
+
+        return giver.receivers
     }
 }

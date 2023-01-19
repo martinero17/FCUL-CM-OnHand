@@ -22,7 +22,6 @@ class LoginViewModel(
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 
-
     fun login(email: String, password: String) {
         viewModelScope.launch {
             try {
