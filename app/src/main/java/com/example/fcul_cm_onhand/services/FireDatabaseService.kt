@@ -32,23 +32,21 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
         return snapshot.documents.first().toObject(User::class.java)!!
     }
 
-    suspend fun getUserGiverByEmail(email: String): UserGiver {
+    private suspend fun getUserGiverByEmail(email: String): UserGiver {
         val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
         return snapshot.documents.first().toObject(UserGiver::class.java)!!
     }
 
-    suspend fun getUserReceiverByEmail(email: String): UserReceiver {
+    private suspend fun getUserReceiverByEmail(email: String): UserReceiver {
         val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
         return snapshot.documents.first().toObject(UserReceiver::class.java)!!
     }
 
     suspend fun addUserToGiver(giverEmail: String, receiverEmail: String) {
         val giver = getUserGiverByEmail(giverEmail)
-        val receiver = getUserByEmail(receiverEmail) as UserReceiver
+        val receiver = getUserReceiverByEmail(receiverEmail)
 
         giver.receivers.add(receiver)
-        Log.v("POPUP_LOG2", giver.receivers.first().email)
-        database.collection(USER_COLLECTION).document(giverEmail).delete()
 
         database.collection(USER_COLLECTION).document(giverEmail).set(giver)
     }

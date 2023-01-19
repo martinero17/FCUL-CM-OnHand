@@ -26,7 +26,7 @@ class PopupViewModel(
     fun getLoggedUser(){
         viewModelScope.launch {
             val result = firebaseAuthService.getUserToken()
-                ?.let { databaseService.getUserByEmail("ola@gmail.com") }
+                ?.let { databaseService.getUserByToken(it) }
             _user.postValue(result!!)
         }
     }

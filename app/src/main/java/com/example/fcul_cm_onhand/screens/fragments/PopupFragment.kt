@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.*
 import com.example.fcul_cm_onhand.R
@@ -29,6 +30,11 @@ class PopupFragment : Fragment(R.layout.fragment_popup) {
             viewModel.getLoggedUser()
             viewModel.user.observe(viewLifecycleOwner) {
                 viewModel.addUserToGiver(it.email, email)
+            }
+            Toast.makeText(requireContext(), "User added successfully!", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<CareGiverHomeFragment>(R.id.fragmentHome)
             }
         }
 

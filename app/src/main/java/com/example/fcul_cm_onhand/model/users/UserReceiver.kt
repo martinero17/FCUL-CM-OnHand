@@ -2,7 +2,7 @@ package com.example.fcul_cm_onhand.model.users
 
 class UserReceiver: User {
 
-    lateinit var location: String
+    var location: String = ""
     var inActivity: Boolean = false
 
     constructor() {}
