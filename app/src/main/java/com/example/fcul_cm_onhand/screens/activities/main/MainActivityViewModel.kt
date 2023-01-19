@@ -36,6 +36,7 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
 
     private lateinit var alertSubscription: ListenerRegistration
     private lateinit var checkInSubscription: ListenerRegistration
+    private lateinit var locationSubscription: ListenerRegistration
 
     private val _location = MutableLiveData<LocationDTO>()
     var location: LiveData<LocationDTO> = _location
@@ -92,6 +93,23 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
                     .setSmallIcon(R.drawable.logo)
                     .setContentTitle("CheckIn received!")
                     .setContentText("The care receiver ${it.receiverId} has checked in")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                with(NotificationManagerCompat.from(application.applicationContext)) {
+                    notify(Random().nextInt(), builder.build())
+                }
+            }
+        )
+    }
+
+    fun startSubToLocation() {
+        checkInSubscription = locationRepo.subscribeToLocation(
+            onSubscriptionError = { error(it) },
+            onStateChange = {
+                val builder = NotificationCompat.Builder(application.applicationContext, "LOCATION_CHANNEL")
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle("Location Received!")
+                    .setContentText("A care receiver has shared their location with you")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                 with(NotificationManagerCompat.from(application.applicationContext)) {

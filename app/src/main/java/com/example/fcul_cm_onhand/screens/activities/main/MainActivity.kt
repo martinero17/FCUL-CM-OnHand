@@ -100,6 +100,17 @@ class MainActivity : AppCompatActivity() {
             // or other notification behaviors after this
             notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(checkInChannel)
+
+            // Create the NotificationChannel
+            name = "Location"
+            descriptionText = "Location notifications"
+            importance = NotificationManager.IMPORTANCE_HIGH
+            val locationChannel = NotificationChannel("LOCATION_CHANNEL", name, importance)
+            locationChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(locationChannel)
         }
     }
 
@@ -125,6 +136,7 @@ class MainActivity : AppCompatActivity() {
     private fun careGiverUpdateSubscriptions() {
         viewModel.startSubToAlerts()
         viewModel.startSubToCheckIn()
+        viewModel.startSubToLocation()
     }
 
     private fun careGiverOnItemSelectedListener(navigationBarView: NavigationBarView) {
