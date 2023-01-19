@@ -17,6 +17,10 @@ class FirebaseAuthService(val auth: FirebaseAuth = FirebaseAuth.getInstance()) {
         return auth.currentUser?.getIdToken(false)?.await()?.token
     }
 
+    suspend fun getUserEmail(): String? {
+        return auth.currentUser?.email
+    }
+
     fun isUserLogged(): Boolean {
         return auth.currentUser != null
     }

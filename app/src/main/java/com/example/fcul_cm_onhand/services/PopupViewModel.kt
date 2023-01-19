@@ -30,16 +30,16 @@ class PopupViewModel(
 
     fun getLoggedUser(){
         viewModelScope.launch {
-            val result = firebaseAuthService.getUserToken()
-                ?.let { databaseService.getUserByToken(it) }
+            val result = firebaseAuthService.getUserEmail()
+                ?.let { databaseService.getUserByEmail(it) }
             _user.postValue(result!!)
         }
     }
 
     fun getGiverUsers() {
         viewModelScope.launch {
-            val result = firebaseAuthService.getUserToken()
-                ?.let { databaseService.getUserGiverByToken(it) }
+            val result = firebaseAuthService.getUserEmail()
+                ?.let { databaseService.getUserGiverByEmail(it) }
             val giver = result as UserGiver
             _receivers.postValue(giver.receivers)
         }

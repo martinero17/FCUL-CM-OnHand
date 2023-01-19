@@ -37,7 +37,7 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
         return snapshot.documents.first().toObject(User::class.java)!!
     }
 
-    private suspend fun getUserGiverByEmail(email: String): UserGiver {
+    suspend fun getUserGiverByEmail(email: String): UserGiver {
         val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
         return snapshot.documents.first().toObject(UserGiver::class.java)!!
     }

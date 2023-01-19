@@ -35,7 +35,6 @@ class CareGiverHomeFragment : Fragment(R.layout.fragment_home_care_giver) {
 
         viewModel.user.observe(viewLifecycleOwner) {
             viewModel.getGiverUsers()
-            Log.v("USER_INFO", it.email)
             viewModel.receivers.observe(viewLifecycleOwner) { receivers ->
                 if (receivers.isNotEmpty()) {
                     Log.v("USER_INFO", receivers.first().email)
