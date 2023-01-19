@@ -1,9 +1,12 @@
 package com.example.fcul_cm_onhand.screens.activities.main
 
 import android.app.Application
+import android.location.Location
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fcul_cm_onhand.R
@@ -11,7 +14,9 @@ import com.example.fcul_cm_onhand.services.AlertDTO
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.repositories.IAlertRepository
 import com.example.fcul_cm_onhand.repositories.ICheckInRepository
+import com.example.fcul_cm_onhand.repositories.ILocationRepository
 import com.example.fcul_cm_onhand.services.CheckInDTO
+import com.example.fcul_cm_onhand.services.LocationDTO
 import com.google.firebase.firestore.ListenerRegistration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -26,9 +31,14 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
     lateinit var alertRepo: IAlertRepository
     @Inject
     lateinit var checkInRepo: ICheckInRepository
+    @Inject
+    lateinit var locationRepo: ILocationRepository
 
     private lateinit var alertSubscription: ListenerRegistration
     private lateinit var checkInSubscription: ListenerRegistration
+
+    private val _location = MutableLiveData<LocationDTO>()
+    var location: LiveData<LocationDTO> = _location
 
     var userType: UserType? = null
 
@@ -43,6 +53,12 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
     fun sendCheckIn() {
         viewModelScope.launch(Dispatchers.IO) {
             checkInRepo.sendCheckIn(CheckInDTO(UUID.randomUUID().toString(), "b", "c"))
+        }
+    }
+
+    fun sendLocation(location: Location) {
+        viewModelScope.launch(Dispatchers.IO) {
+            locationRepo.sendLocation(location)
         }
     }
 
@@ -83,5 +99,11 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
                 }
             }
         )
+    }
+
+    fun downloadLocation() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _location.postValue(locationRepo.downloadLocation())
+        }
     }
 }

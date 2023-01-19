@@ -1,13 +1,7 @@
 package com.example.fcul_cm_onhand
 
-import com.example.fcul_cm_onhand.services.AlertService
-import com.example.fcul_cm_onhand.services.IAlertService
-import com.example.fcul_cm_onhand.repositories.AlertRepository
-import com.example.fcul_cm_onhand.repositories.CheckInRepository
-import com.example.fcul_cm_onhand.repositories.IAlertRepository
-import com.example.fcul_cm_onhand.repositories.ICheckInRepository
-import com.example.fcul_cm_onhand.services.CheckInService
-import com.example.fcul_cm_onhand.services.ICheckInService
+import com.example.fcul_cm_onhand.repositories.*
+import com.example.fcul_cm_onhand.services.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Binds
@@ -41,5 +35,13 @@ class AppModules {
         @Binds
         @Singleton
         fun provideCheckInRepo(checkInRepository: CheckInRepository): ICheckInRepository
+
+        @Binds
+        @Singleton
+        fun provideLocationService(locationService: LocationService): ILocationService
+
+        @Binds
+        @Singleton
+        fun provideLocationRepo(locationRepository: LocationRepository): ILocationRepository
     }
 }

@@ -3,6 +3,7 @@ package com.example.fcul_cm_onhand.screens.fragments.care_giver
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import androidx.fragment.app.Fragment
 
@@ -13,8 +14,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.fcul_cm_onhand.R
+import com.example.fcul_cm_onhand.screens.activities.main.MainActivityViewModel
+import com.example.fcul_cm_onhand.services.LocationDTO
 import com.example.paint.PermissionUtils
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,18 +28,21 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class LocationFragment : Fragment(R.layout.fragment_location), OnMapReadyCallback,
-    ActivityCompat.OnRequestPermissionsResultCallback {
+class LocationFragment : Fragment(R.layout.fragment_location){
+
+    private val viewModel: MainActivityViewModel by activityViewModels()
 
     private var permissionDenied = false
     private var map: GoogleMap? = null
     private var mGpsLocationClient: LocationManager? = null
+    private lateinit var location: Location
 
-/*    private val callback = OnMapReadyCallback { googleMap ->
-        val lisbon = LatLng(38.73, -9.14)
-        googleMap.addMarker(MarkerOptions().position(lisbon).title("Marker in Lisbon"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lisbon))
-    }*/
+    private val callback = OnMapReadyCallback { googleMap ->
+        val location = viewModel.location.value ?: LocationDTO(38.73, -9.14)
+        val latLng = LatLng(location.lat, location.lng)
+        googleMap.addMarker(MarkerOptions().position(latLng).title("Care Receiver"))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,72 +54,7 @@ class LocationFragment : Fragment(R.layout.fragment_location), OnMapReadyCallbac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = SupportMapFragment.newInstance()
-        mapFragment.getMapAsync(this)
-
-        childFragmentManager.commit {
-            setReorderingAllowed(true)
-            add(R.id.map, mapFragment)
-        }
-
-        mGpsLocationClient =
-            activity?.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
-
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun enableMyLocation() {
-
-        // 1. Check if permissions are granted, if so, enable the my location layer
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            map?.isMyLocationEnabled = true
-            return
-        }
-
-        // 2. If if a permission rationale dialog should be shown
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        ) {
-            PermissionUtils.RationaleDialog.newInstance(
-                LOCATION_PERMISSION_REQUEST_CODE, true
-            ).show(childFragmentManager, "dialog")
-            return
-        }
-
-        // 3. Otherwise, request permission
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
-            LOCATION_PERMISSION_REQUEST_CODE
-        )
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        enableMyLocation()
-    }
-
-    companion object {
-        /**
-         * Request code for location permission request.
-         *
-         * @see .onRequestPermissionsResult
-         */
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
     }
 }
