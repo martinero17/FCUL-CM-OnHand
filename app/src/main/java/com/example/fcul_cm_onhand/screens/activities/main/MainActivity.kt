@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun careReceiverRepeatingAlarmSetup(exactAlarms: IExactAlarms) {
-        val triggerTime = convertToAlarmTimeMillis(17, 28)
+        val triggerTime = convertToAlarmTimeMillis(16, 12)
         exactAlarms.scheduleExactAlarm(ExactAlarm(triggerTime), ExactAlarmType.CHECK_IN)
     }
 
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home_button -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace<CareGiverHomeFragment>(R.id.fragmentHome) //TODO Swap
+                        replace<CareGiverHomeFragment>(R.id.fragmentHome)
                     }
                     true
                 }
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home_button -> {
                     supportFragmentManager.commit {
                         setReorderingAllowed(true)
-                        replace<CareReceiverHomeFragment>(R.id.fragmentHome) //TODO Swap
+                        replace<CareReceiverHomeFragment>(R.id.fragmentHome)
                     }
                     true
                 }

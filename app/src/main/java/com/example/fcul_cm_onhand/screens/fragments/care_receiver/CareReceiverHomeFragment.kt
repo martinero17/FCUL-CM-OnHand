@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -24,6 +25,8 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val monitoringButton = view.findViewById<Button>(R.id.monitoring_button)
+
+        monitoringButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_vector_pause, 0, 0, 0)
         monitoringButton.setOnClickListener {
             if(monitoringButton.text == getString(R.string.stop_monitoring_button)){
                 monitoringButton.text = getString(R.string.start_monitoring_button)
@@ -57,10 +60,11 @@ class CareReceiverHomeFragment : Fragment(R.layout.fragment_home_care_receiver) 
             locationProviderClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     // Do something with the location
-                    Log.v("LOCATION_TESTING", "About to call vm")
                     viewModel.sendLocation(location)
                 }
             }
+
+            Toast.makeText(context, "Location sent!", Toast.LENGTH_SHORT).show()
         }
     }
 

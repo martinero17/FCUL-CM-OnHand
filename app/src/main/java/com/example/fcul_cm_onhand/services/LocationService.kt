@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 import javax.inject.Inject
 
 interface ILocationService {
@@ -20,7 +21,7 @@ interface ILocationService {
 
 class LocationService @Inject constructor(private val firestore: FirebaseFirestore): ILocationService {
     override suspend fun sendLocation(location: Location) {
-        val locationDto = LocationDTO(location.latitude, location.longitude)
+        val locationDto = LocationDTO(UUID.randomUUID().toString(), location.latitude, location.longitude)
 
         firestore
             .collection("locations")
@@ -58,12 +59,14 @@ class LocationService @Inject constructor(private val firestore: FirebaseFiresto
 }
 
 data class LocationDTO(
+    val id: String,
     val lat: Double,
     val lng: Double,
 )
 
 private fun DocumentSnapshot.toLocation() =
     LocationDTO(
+        data?.get("id") as String,
         data?.get("lat") as Double,
         data?.get("lng") as Double,
     )

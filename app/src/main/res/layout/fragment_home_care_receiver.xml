@@ -79,7 +79,6 @@
             android:text="@string/stop_monitoring_button"
             android:textAlignment="textStart"
             android:textColor="@color/black"
-            app:icon="@drawable/ic_vector_pause"
             app:iconTint="@color/black" />
 
     </LinearLayout>

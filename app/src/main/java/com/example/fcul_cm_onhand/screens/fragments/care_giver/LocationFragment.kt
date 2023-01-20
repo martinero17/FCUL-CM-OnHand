@@ -38,7 +38,7 @@ class LocationFragment : Fragment(R.layout.fragment_location){
     private lateinit var location: Location
 
     private val callback = OnMapReadyCallback { googleMap ->
-        val location = viewModel.location.value ?: LocationDTO(38.73, -9.14)
+        val location = viewModel.location.value ?: LocationDTO("SomeId", 38.73, -9.14)
         val latLng = LatLng(location.lat, location.lng)
         googleMap.addMarker(MarkerOptions().position(latLng).title("Care Receiver"))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
