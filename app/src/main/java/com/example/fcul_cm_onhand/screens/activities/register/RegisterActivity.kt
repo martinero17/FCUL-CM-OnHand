@@ -74,43 +74,4 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-/*    private fun verifyCredentials(name: Editable, username: Editable, password: Editable,
-                                  confirmPassword: Editable, type: RadioGroup): Boolean {
-        return !inputIsEmpty(name, username, password, confirmPassword, type) &&
-                passwordMatch(password, confirmPassword)
-
-    }
-
-    private fun passwordMatch(password: Editable, confirmPassword: Editable): Boolean{
-        if(password.toString() != confirmPassword.toString()){
-            toastMessage("Password doesn't match!$password e $confirmPassword")
-            return false
-        }
-        return true
-    }
-
-    private fun inputIsEmpty(name: Editable, username: Editable, password: Editable,
-                             confirmPassword: Editable, type: RadioGroup): Boolean{
-        if(name.isEmpty()){
-            toastMessage("Please fill name!")
-            return true
-        } else if(username.isEmpty()){
-            toastMessage("Please fill username!")
-            return true
-        } else if(password.isEmpty()){
-            toastMessage("Please fill password!")
-            return true
-        } else if(confirmPassword.isEmpty()){
-            toastMessage("Please confirm password!")
-            return true
-        } else if(type.checkedRadioButtonId == -1){
-            toastMessage("Please select one type!")
-            return true
-        }
-        return false
-    }
-
-    private fun toastMessage(text: String){
-        Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
-    }*/
 }

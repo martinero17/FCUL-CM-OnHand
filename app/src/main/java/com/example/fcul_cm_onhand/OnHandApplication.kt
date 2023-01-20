@@ -24,6 +24,5 @@ class OnHandApplication : Application() {
 
         val sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         exactAlarms = ExactAlarms(this, sharedPreferences)
-        println("blele")
     }
 }

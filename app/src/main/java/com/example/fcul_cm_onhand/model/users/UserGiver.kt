@@ -11,12 +11,4 @@ class UserGiver : User {
                 this.receivers = receivers
     }
 
-    fun toMap(): Map<String, String> {
-        return mapOf(
-            "name" to name,
-            "email" to email,
-            "type" to type,
-            "token" to token
-        )
-    }
 }

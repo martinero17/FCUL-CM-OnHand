@@ -3,7 +3,6 @@ package com.example.fcul_cm_onhand.screens.activities.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -13,13 +12,7 @@ import com.example.fcul_cm_onhand.R
 import com.example.fcul_cm_onhand.model.UserType
 import com.example.fcul_cm_onhand.screens.activities.main.MainActivity
 import com.example.fcul_cm_onhand.screens.activities.register.RegisterActivity
-import com.example.fcul_cm_onhand.services.FireDatabaseService
-import com.example.fcul_cm_onhand.services.FirebaseAuthService
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 class LoginActivity : AppCompatActivity() {
 

@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Larissa Cardoso"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="16sp"
@@ -33,9 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="larissaCC"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
         <Button
             android:id="@+id/share_location_button"
@@ -89,7 +87,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-medium"
                         android:letterSpacing="0.0892857143"
-                        android:text="Location Radius:"
+                        android:text="@string/location_radius"
                         android:textAlignment="textStart"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
@@ -109,7 +107,7 @@
                     android:id="@+id/radius_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12km"
+                    android:text="@string/_12km"
                     android:textColor="@color/black" />
 
             </LinearLayout>

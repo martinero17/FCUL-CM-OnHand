@@ -1,6 +1,5 @@
 package com.example.fcul_cm_onhand.services
 
-import android.util.Log
 import com.example.fcul_cm_onhand.model.users.User
 import com.example.fcul_cm_onhand.model.users.UserGiver
 import com.example.fcul_cm_onhand.model.users.UserReceiver
@@ -12,7 +11,7 @@ const val USER_COLLECTION = "Users"
 
 class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFirestore.getInstance()) {
 
-    suspend fun signUp(name: String, email: String, type: String, token: String){
+    fun signUp(name: String, email: String, type: String, token: String){
         val user = User(name, email, type, token)
         if (user.isReceiver())
             database.collection(USER_COLLECTION).document(email).set(UserReceiver(name, email, type, token, "", false))
@@ -22,15 +21,6 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
             ))
     }
 
-    suspend fun getUserByToken(token: String): User {
-        val snapshot = database.collection(USER_COLLECTION).whereEqualTo("token", token).get().await()
-        return snapshot.documents.first().toObject(User::class.java)!!
-    }
-
-    suspend fun getUserGiverByToken(token: String): UserGiver {
-        val snapshot = database.collection(USER_COLLECTION).whereEqualTo("token", token).get().await()
-        return snapshot.documents.first().toObject(UserGiver::class.java)!!
-    }
 
     suspend fun getUserByEmail(email: String): User {
         val snapshot = database.collection(USER_COLLECTION).whereEqualTo("email", email).get().await()
@@ -54,11 +44,5 @@ class FireDatabaseService(private val database: FirebaseFirestore = FirebaseFire
         giver.receivers.add(receiver)
 
         database.collection(USER_COLLECTION).document(giverEmail).set(giver)
-    }
-
-    suspend fun getGiverUsers(email: String): MutableList<UserReceiver> {
-        val giver = getUserGiverByEmail(email)
-
-        return giver.receivers
     }
 }

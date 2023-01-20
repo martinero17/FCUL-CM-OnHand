@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -82,7 +81,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/username_icon"
                 android:background="@android:color/transparent"
-                android:hint="email"
+                android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/black" />
 
@@ -200,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Already have an account?"
+                android:text="@string/already_have_an_account"
                 android:textColor="@color/black" />
 
             <TextView
@@ -208,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Sign in"
+                android:text="@string/sign_in"
                 android:textColor="@color/blue" />
         </LinearLayout>
 

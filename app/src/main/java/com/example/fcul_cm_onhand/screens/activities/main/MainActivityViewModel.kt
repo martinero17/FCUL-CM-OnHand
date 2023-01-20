@@ -36,7 +36,6 @@ class MainActivityViewModel @Inject constructor(val application: Application): V
 
     private lateinit var alertSubscription: ListenerRegistration
     private lateinit var checkInSubscription: ListenerRegistration
-    private lateinit var locationSubscription: ListenerRegistration
 
     private val _location = MutableLiveData<LocationDTO>()
     var location: LiveData<LocationDTO> = _location

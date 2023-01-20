@@ -1,21 +1,14 @@
 package com.example.fcul_cm_onhand.screens.fragments
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
+
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.*
 import com.example.fcul_cm_onhand.R
-import com.example.fcul_cm_onhand.screens.activities.login.LoginViewModel
 import com.example.fcul_cm_onhand.screens.fragments.care_giver.CareGiverHomeFragment
-import com.example.fcul_cm_onhand.services.FireDatabaseService
-import com.example.fcul_cm_onhand.services.FirebaseAuthService
 import com.example.fcul_cm_onhand.services.PopupViewModel
 
 class PopupFragment : Fragment(R.layout.fragment_popup) {
@@ -30,11 +23,11 @@ class PopupFragment : Fragment(R.layout.fragment_popup) {
             viewModel.getLoggedUser()
             viewModel.user.observe(viewLifecycleOwner) {
                 viewModel.addUserToGiver(it.email, email)
-            }
-            Toast.makeText(requireContext(), "User added successfully!", Toast.LENGTH_SHORT).show()
-            requireActivity().supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CareGiverHomeFragment>(R.id.fragmentHome)
+                Toast.makeText(requireContext(), "User added successfully!", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<CareGiverHomeFragment>(R.id.fragmentHome)
+                }
             }
         }
 

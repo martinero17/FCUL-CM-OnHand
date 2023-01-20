@@ -43,5 +43,17 @@
     <string name="checkin_channel_id">CHECKIN_CHANNEL</string>
     <string name="checkin_channel_name">CheckIn</string>
     <string name="checkin_channel_desc">Check-in notifications.</string>
+    <string name="email_hint">Email</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="add_new_user">Add new user</string>
+    <string name="add_user">Add user</string>
+    <string name="close">Close</string>
+    <string name="logout">LogOut</string>
+    <string name="location_radius">Location Radius:</string>
+    <string name="_12km">12km</string>
+    <string name="didn_t_checkin_in_time">Didn\'t checkin in time.</string>
 
 </resources>
