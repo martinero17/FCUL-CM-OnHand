@@ -36,7 +36,7 @@ class LoginViewModel(
     fun getLoggedUser(email: String){
         viewModelScope.launch {
             val result = databaseService.getUserByEmail(email)
-            _user.postValue(result!!)
+            _user.postValue(result)
         }
     }
 

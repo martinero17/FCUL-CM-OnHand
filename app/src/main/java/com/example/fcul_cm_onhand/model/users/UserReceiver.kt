@@ -12,14 +12,5 @@ class UserReceiver: User {
                 this.location = location
                 this.inActivity = inActivity
             }
-    fun toMap(): Map<String, String> {
-        return mapOf(
-            "name" to name,
-            "email" to email,
-            "type" to type,
-            "token" to token,
-            "location" to location,
-            "activity" to inActivity.toString()
-        )
-    }
+
 }

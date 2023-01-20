@@ -16,10 +16,12 @@ interface IAlertService {
     ): ListenerRegistration
 }
 
+private const val ALERTS = "alerts"
+
 class AlertService @Inject constructor(private val firestore: FirebaseFirestore): IAlertService {
     override suspend fun sendAlert(alert: AlertDTO) {
         firestore
-            .collection("alerts")
+            .collection(ALERTS)
             .document(alert.giverId)
             .set(alert)
             .await()
@@ -30,7 +32,7 @@ class AlertService @Inject constructor(private val firestore: FirebaseFirestore)
         onStateChange: (alert: AlertDTO) -> Unit
     ): ListenerRegistration {
         return firestore
-            .collection("alerts")
+            .collection(ALERTS)
             .document("b")
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
@@ -43,7 +45,7 @@ class AlertService @Inject constructor(private val firestore: FirebaseFirestore)
                     onStateChange(alert)
 
                     firestore
-                        .collection("alerts")
+                        .collection(ALERTS)
                         .document("b")
                         .delete()
                 }

@@ -1,7 +1,6 @@
 package com.example.fcul_cm_onhand.repositories
 
 import android.location.Location
-import com.example.fcul_cm_onhand.services.CheckInDTO
 import com.example.fcul_cm_onhand.services.ILocationService
 import com.example.fcul_cm_onhand.services.LocationDTO
 import com.google.firebase.firestore.ListenerRegistration

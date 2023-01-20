@@ -3,7 +3,7 @@ package com.example.fcul_cm_onhand.services
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 
-class FirebaseAuthService(val auth: FirebaseAuth = FirebaseAuth.getInstance()) {
+class FirebaseAuthService(private val auth: FirebaseAuth = FirebaseAuth.getInstance()) {
 
     suspend fun signUp(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).await()
@@ -17,7 +17,7 @@ class FirebaseAuthService(val auth: FirebaseAuth = FirebaseAuth.getInstance()) {
         return auth.currentUser?.getIdToken(false)?.await()?.token
     }
 
-    suspend fun getUserEmail(): String? {
+    fun getUserEmail(): String? {
         return auth.currentUser?.email
     }
 

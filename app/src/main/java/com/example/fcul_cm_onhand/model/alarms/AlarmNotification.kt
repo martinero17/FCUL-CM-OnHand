@@ -11,8 +11,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.fcul_cm_onhand.OnHandApplication
 import com.example.fcul_cm_onhand.R
-import com.example.fcul_cm_onhand.repositories.IAlertRepository
-import com.example.fcul_cm_onhand.services.AlertDTO
 import com.example.fcul_cm_onhand.services.CheckInDTO
 import com.example.fcul_cm_onhand.services.ICheckInService
 import dagger.hilt.android.AndroidEntryPoint

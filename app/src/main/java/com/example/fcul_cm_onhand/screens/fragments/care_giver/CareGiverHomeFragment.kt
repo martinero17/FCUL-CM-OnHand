@@ -1,5 +1,6 @@
 package com.example.fcul_cm_onhand.screens.fragments.care_giver
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,6 +29,7 @@ class CareGiverHomeFragment : Fragment(R.layout.fragment_home_care_giver) {
     private lateinit var usersAdapter: UsersAdapter
     private val viewModel: PopupViewModel by viewModels()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

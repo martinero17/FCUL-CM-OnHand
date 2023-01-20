@@ -16,10 +16,12 @@ interface ICheckInService {
     ): ListenerRegistration
 }
 
+private const val CHECKINS = "checkins"
+
 class CheckInService @Inject constructor(private val firestore: FirebaseFirestore): ICheckInService {
     override suspend fun sendCheckIn(checkIn: CheckInDTO) {
         firestore
-            .collection("checkins")
+            .collection(CHECKINS)
             .document(checkIn.giverId)
             .set(checkIn)
             .await()
@@ -30,7 +32,7 @@ class CheckInService @Inject constructor(private val firestore: FirebaseFirestor
         onStateChange: (checkIn: CheckInDTO) -> Unit
     ): ListenerRegistration {
         return firestore
-            .collection("checkins")
+            .collection(CHECKINS)
             .document("b")
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
@@ -44,7 +46,7 @@ class CheckInService @Inject constructor(private val firestore: FirebaseFirestor
                     onStateChange(checkIn)
 
                     firestore
-                        .collection("checkins")
+                        .collection(CHECKINS)
                         .document("b")
                         .delete()
                 }

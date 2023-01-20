@@ -27,7 +27,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             email = bundle.getString("email").toString()
         }
 
-
         view.findViewById<TextView>(R.id.user_name_user).text = name
         view.findViewById<TextView>(R.id.user_email_user).text = email
 
@@ -35,8 +34,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
             viewModel.downloadLocation()
             viewModel.location.observe(requireActivity()) {
-                //val bundle = Bundle().apply { putParcelable("location", it) }
-                //val locationFragment = LocationFragment().apply { arguments = bundle }
                 requireActivity().supportFragmentManager.commit {
                     setReorderingAllowed(true)
                     add<LocationFragment>(R.id.fragmentHome)

@@ -19,12 +19,14 @@ interface ILocationService {
     ): ListenerRegistration
 }
 
+private const val LOCATIONS = "locations"
+
 class LocationService @Inject constructor(private val firestore: FirebaseFirestore): ILocationService {
     override suspend fun sendLocation(location: Location) {
         val locationDto = LocationDTO(UUID.randomUUID().toString(), location.latitude, location.longitude)
 
         firestore
-            .collection("locations")
+            .collection(LOCATIONS)
             .document("c")
             .set(locationDto)
             .await()
@@ -32,7 +34,7 @@ class LocationService @Inject constructor(private val firestore: FirebaseFiresto
 
     override suspend fun downloadLocation(): LocationDTO {
         return firestore
-            .collection("locations")
+            .collection(LOCATIONS)
             .get()
             .await()
             .documents
@@ -45,7 +47,7 @@ class LocationService @Inject constructor(private val firestore: FirebaseFiresto
         onStateChange: () -> Unit
     ): ListenerRegistration {
         return firestore
-            .collection("locations")
+            .collection(LOCATIONS)
             .document("c")
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {

@@ -25,7 +25,6 @@ class PopupViewModel(
         viewModelScope.launch {
             databaseService.addUserToGiver(giverEmail, receiverEmail)
         }
-
     }
 
     fun getLoggedUser(){

@@ -49,7 +49,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/username_icon"
                 android:background="@android:color/transparent"
-                android:hint="Email"
+                android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/black"
                 tools:ignore="TextFields" />
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Don't have an account?"
+                android:text="@string/don_t_have_an_account"
                 android:textColor="@color/black" />
 
             <TextView
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Sign up"
+                android:text="@string/sign_up"
                 android:textColor="@color/blue" />
         </LinearLayout>
 
